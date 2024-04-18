@@ -48,7 +48,7 @@ export async function POST(req: Request) {
   const adjustedMessages = [systemMessage, ...messages];
 
   const res = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-3.5-turbo-0125',
     messages: adjustedMessages,
     temperature: 0.7,
     stream: true
