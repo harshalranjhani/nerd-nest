@@ -6,12 +6,12 @@
 // import { redirect } from 'next/navigation'
 
 // export default async function SignInPage() {
-//   const cookieStore = cookies()
-//   const session = await auth({ cookieStore })
-//   // redirect to home if user is already logged in
-//   if (session?.user) {
-//     redirect('/')
-//   }
+  // const cookieStore = cookies()
+  // const session = await auth({ cookieStore })
+  // // redirect to home if user is already logged in
+  // if (session?.user) {
+  //   redirect('/')
+  // }
 //   return (
 //     // <div className="flex h-[calc(100vh-theme(spacing.16))] flex-col items-center justify-center py-10">
 //     //   <div className="w-full max-w-sm">
@@ -30,8 +30,21 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LoginButton } from "@/components/login-button"
+import { cookies } from "next/headers"
+import { auth } from "@/auth"
+import { redirect } from "next/dist/server/api-utils"
 
-export default function SignInPage() {
+export default async function SignInPage() {
+  const cookieStore = cookies()
+  const session = await auth({ cookieStore })
+  if (session?.user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
+  }
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">

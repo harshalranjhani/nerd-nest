@@ -33,16 +33,27 @@ import {
   TableFooter,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+  TableRow
+} from '@/components/ui/table'
 import { IconExternalLink } from '@/components/ui/icons'
 
+export interface ChatPageProps {
+  params: {
+    id: string
+  }
+}
 
-export default async function Dashboard() {
+export default async function Dashboard({
+  params
+}: ChatPageProps): Promise<any> {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
 
   const data = await getLeetCodeDetails('harshalranjhani')
+
+  if (params.id !== session?.user?.id) {
+    return null
+  }
 
   const statData = [
     {
@@ -111,7 +122,12 @@ export default async function Dashboard() {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Progress value={data[stat.totalSolvedSlug]/data[stat.totalQuestionsSlug]} />
+                      <Progress
+                        value={
+                          data[stat.totalSolvedSlug] /
+                          data[stat.totalQuestionsSlug]
+                        }
+                      />
                     </CardFooter>
                   </Card>
                 </>
@@ -119,26 +135,38 @@ export default async function Dashboard() {
             </div>
             <h1>Recent Submissions</h1>
             <Table>
-      <TableCaption>A list of your recent submissions.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Visit</TableHead>
-          <TableHead>Question</TableHead>
-          <TableHead>Submission Time</TableHead>
-          <TableHead className="text-right">Status</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data.recentSubmissions.map((submission:any) => (
-          <TableRow key={submission.timestamp}>
-            <TableCell><a href={`https://leetcode.com/problems/${submission.titleSlug}`}><IconExternalLink/></a></TableCell>
-            <TableCell className="font-medium">{submission.title}</TableCell>
-            <TableCell>{new Date(submission.timestamp * 1000).toLocaleString()}</TableCell>
-            <TableCell className="text-right">{submission.statusDisplay}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+              <TableCaption>A list of your recent submissions.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Visit</TableHead>
+                  <TableHead>Question</TableHead>
+                  <TableHead>Submission Time</TableHead>
+                  <TableHead className="text-right">Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data.recentSubmissions.map((submission: any) => (
+                  <TableRow key={submission.timestamp}>
+                    <TableCell>
+                      <a
+                        href={`https://leetcode.com/problems/${submission.titleSlug}`}
+                      >
+                        <IconExternalLink />
+                      </a>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {submission.title}
+                    </TableCell>
+                    <TableCell>
+                      {new Date(submission.timestamp * 1000).toLocaleString()}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {submission.statusDisplay}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       </main>
