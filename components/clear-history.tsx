@@ -20,7 +20,7 @@ import {
 import { IconSpinner } from '@/components/ui/icons'
 
 interface ClearHistoryProps {
-  clearChats: () => ServerActionResult<void>
+  clearChats: () => any
 }
 
 export function ClearHistory({ clearChats }: ClearHistoryProps) {
