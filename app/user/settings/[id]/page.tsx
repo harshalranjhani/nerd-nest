@@ -21,8 +21,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { cookies } from "next/headers"
+import { auth } from "@/auth"
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const cookieStore = cookies()
+  const session = await auth({ cookieStore })
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
@@ -38,21 +42,21 @@ export default function Dashboard() {
             </Link>
             <Link href="#">Security</Link>
             <Link href="#">Integrations</Link>
-            <Link href="#">Support</Link>
+            <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
             <Link href="#">Organizations</Link>
             <Link href="#">Advanced</Link>
           </nav>
           <div className="grid gap-6">
             <Card x-chunk="dashboard-04-chunk-1">
               <CardHeader>
-                <CardTitle>Store Name</CardTitle>
+                <CardTitle>Leetcode username</CardTitle>
                 <CardDescription>
-                  Used to identify your store in the marketplace.
+                  Used for fetching your submissions and problems.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form>
-                  <Input placeholder="Store Name" />
+                  <Input placeholder="username-here" />
                 </form>
               </CardContent>
               <CardFooter className="border-t px-6 py-4">

@@ -119,3 +119,9 @@ export async function shareChat(chat: Chat) {
 
   return payload
 }
+
+export async function getLeetCodeDetails(username: string) {
+  const response = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${username}/`)
+  const data = await response.json()
+  return data
+}
