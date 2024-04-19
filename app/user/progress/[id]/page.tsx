@@ -109,7 +109,7 @@ export default async function Dashboard({
           </nav>
           <div className="grid gap-6">
             <span className="text-3xl font-semibold text-primary">
-              Hey there, {session?.user?.email}
+              Hey there, {userDetails?.name}
             </span>
             <div className="md:flex">
               {statData.map(stat => (
