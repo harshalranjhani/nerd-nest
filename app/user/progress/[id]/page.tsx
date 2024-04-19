@@ -99,13 +99,9 @@ export default async function Dashboard({
             x-chunk="dashboard-04-chunk-0"
           >
             <Link href={`/user/settings/${session?.user?.id}`}>General</Link>
-            <Link href="#">Security</Link>
             <Link href="#" className="font-semibold text-primary">
               Progress
             </Link>
-            <Link href="#">Support</Link>
-            <Link href="#">Organizations</Link>
-            <Link href="#">Advanced</Link>
           </nav>
           <div className="grid gap-6">
             <span className="text-3xl font-semibold text-primary">

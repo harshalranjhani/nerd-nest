@@ -84,43 +84,10 @@ export default async function Dashboard({
             <Link href="#" className="font-semibold text-primary">
               General
             </Link>
-            <Link href="#">Security</Link>
-            <Link href="#">Integrations</Link>
             <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
-            <Link href="#">Organizations</Link>
-            <Link href="#">Advanced</Link>
           </nav>
           <div className="grid gap-6">
             <LeetCode userId={session?.user?.id} leetcode_username={userDetails?.leetcode_username} />
-            <Card x-chunk="dashboard-04-chunk-2">
-              <CardHeader>
-                <CardTitle>Plugins Directory</CardTitle>
-                <CardDescription>
-                  The directory within your project, in which your plugins are
-                  located.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form className="flex flex-col gap-4">
-                  <Input
-                    placeholder="Project Name"
-                    defaultValue="/content/plugins"
-                  />
-                  <div className="flex items-center space-x-2">
-                    {/* <Checkbox id="include" defaultChecked /> */}
-                    <label
-                      htmlFor="include"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Allow administrators to change the directory.
-                    </label>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter className="border-t px-6 py-4">
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
           </div>
         </div>
       </main>
