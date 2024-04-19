@@ -33,7 +33,7 @@ export function LoginButton({
         setIsLoading(true)
         await supabase.auth.signInWithOAuth({
           provider: 'github',
-          options: { redirectTo: `${location.origin}/api/auth/callback` }
+          options: { redirectTo: `${location.origin}/api/auth/callback`, scopes: 'read:user'},
         })
       }}
       disabled={isLoading}

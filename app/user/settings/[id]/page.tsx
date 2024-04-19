@@ -24,10 +24,39 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cookies } from 'next/headers'
 import { auth } from '@/auth'
 import { redirect } from 'next/dist/server/api-utils'
+import LeetCode from '@/components/leetcode'
 
 export interface ChatPageProps {
   params: {
     id: string
+  }
+}
+
+const getUserDetails = async (user_id: string): Promise<any> => {
+  if (!user_id) {
+    return null
+  }
+  if (user_id) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/user/getUserDetails`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id
+          })
+        }
+      )
+      const data = await response.json()
+      return data[0]
+    } catch (e: any) {
+      console.log(e.message)
+      // toast.error(e.message)
+      return null
+    }
   }
 }
 
@@ -40,6 +69,8 @@ export default async function Dashboard({
   if (params.id !== session?.user?.id) {
     return null
   }
+  const userDetails = await getUserDetails(params.id)
+  console.log(userDetails)
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
@@ -61,22 +92,7 @@ export default async function Dashboard({
             <Link href="#">Advanced</Link>
           </nav>
           <div className="grid gap-6">
-            <Card x-chunk="dashboard-04-chunk-1">
-              <CardHeader>
-                <CardTitle>Leetcode username</CardTitle>
-                <CardDescription>
-                  Used for fetching your submissions and problems.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <Input placeholder="username-here" />
-                </form>
-              </CardContent>
-              <CardFooter className="border-t px-6 py-4">
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
+            <LeetCode userId={session?.user?.id} leetcode_username={userDetails.leetcode_username} />
             <Card x-chunk="dashboard-04-chunk-2">
               <CardHeader>
                 <CardTitle>Plugins Directory</CardTitle>

@@ -59,35 +59,6 @@ export interface Database {
           }
         ]
       },
-      users: {
-        Row: {
-          id: string
-          email: string | null
-          name: string | null
-          role: string | null
-          created_at: string | null
-          updated_at: string | null
-          leetcodeUserame: string | null
-        }
-        Insert: {
-          id: string
-          email?: string | null
-          name?: string | null
-          role?: string | null
-          created_at: string | null
-          updated_at: string | null
-          leetcodeUserame: string | null
-        }
-        Update: {
-          id?: string
-          email?: string | null
-          name?: string | null
-          updated_at: string | null
-          leetcodeUserame: string | null
-        }
-        Relationships: []
-      
-      }
     }
     Views: {
       [_ in never]: never

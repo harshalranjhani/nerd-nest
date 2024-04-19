@@ -15,7 +15,21 @@ export async function GET(request: Request) {
     const supabase = createRouteHandlerClient({
       cookies: () => cookieStore
     })
-    await supabase.auth.exchangeCodeForSession(code)
+    const session = await supabase.auth.exchangeCodeForSession(code)
+    // insert the user into the users table
+    // await supabase.from('users').insert([{ id: session.user.id }])
+    const supabase_user = session?.data?.session?.user
+    await supabase
+      .from('users')
+      .upsert({
+        user_id: supabase_user?.identities[0]?.user_id,
+        email: supabase_user?.email,
+        role: supabase_user?.role,
+        created_at: supabase_user?.identities[0]?.created_at,
+        updated_at: supabase_user?.identities[0]?.updated_at,
+        name: supabase_user?.user_metadata?.user_name,
+      })
+      .throwOnError()
   }
 
   // URL to redirect to after sign in process completes
