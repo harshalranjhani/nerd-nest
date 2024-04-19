@@ -32,7 +32,7 @@ export interface ChatPageProps {
   }
 }
 
-const getUserDetails = async (user_id: string): Promise<any> => {
+export const getUserDetails = async (user_id: string): Promise<any> => {
   if (!user_id) {
     return null
   }
@@ -70,7 +70,6 @@ export default async function Dashboard({
     return null
   }
   const userDetails = await getUserDetails(params.id)
-  console.log(userDetails)
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
@@ -92,7 +91,7 @@ export default async function Dashboard({
             <Link href="#">Advanced</Link>
           </nav>
           <div className="grid gap-6">
-            <LeetCode userId={session?.user?.id} leetcode_username={userDetails.leetcode_username} />
+            <LeetCode userId={session?.user?.id} leetcode_username={userDetails?.leetcode_username} />
             <Card x-chunk="dashboard-04-chunk-2">
               <CardHeader>
                 <CardTitle>Plugins Directory</CardTitle>

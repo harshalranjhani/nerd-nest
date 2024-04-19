@@ -36,6 +36,7 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { IconExternalLink } from '@/components/ui/icons'
+import { getUserDetails } from '../../settings/[id]/page'
 
 export interface ChatPageProps {
   params: {
@@ -48,8 +49,12 @@ export default async function Dashboard({
 }: ChatPageProps): Promise<any> {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
-
-  const data = await getLeetCodeDetails('harshalranjhani')
+  const userDetails = await getUserDetails(params.id)
+  console.log(userDetails?.leetcode_username)
+  const data = await getLeetCodeDetails(userDetails?.leetcode_username)
+  if(!data) {
+    return null
+  }
 
   if (params.id !== session?.user?.id) {
     return null
