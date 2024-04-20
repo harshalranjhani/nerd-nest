@@ -70,6 +70,7 @@ export default async function Dashboard({
     return null
   }
   const dataReceived = await getUserDetails(params.id)
+  console.log(dataReceived)
   const userDetails = dataReceived.userData[0]
   return (
     <div className="flex min-h-screen w-full flex-col">

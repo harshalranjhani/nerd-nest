@@ -27,6 +27,8 @@ import { redirect } from 'next/dist/server/api-utils'
 import LeetCode from '@/components/leetcode'
 import NoQuestions from '@/components/no-questions'
 import { getUserDetails } from '../../settings/[id]/page'
+import QuestionsTable from '@/components/questions-table'
+import NewQuestion from '@/components/new-question-dialog'
 
 export interface ChatPageProps {
   params: {
@@ -64,7 +66,12 @@ export default async function Dashboard({
             </Link>
           </nav>
           <div className="grid gap-6">
-            {!receivedData.questionsData && <NoQuestions userId={session?.user?.id || ""} />}
+            {!receivedData.questionsData.length ? (
+              <NoQuestions userId={session?.user?.id || ''} />
+            ): <div>
+              <NewQuestion userId={session?.user?.id} buttonTitle="Add More" />
+                <QuestionsTable questions={receivedData?.questionsData} />
+              </div>}
           </div>
         </div>
       </main>

@@ -31,7 +31,7 @@ const NoQuestions = ({ userId }: LeetCodeProps) => {
             This will require you to add the question manually, where you can add the question title, description, and the solution.
         </CardContent>
         <CardFooter className="border-t px-6 py-4">
-          <NewQuestion userId={userId} />
+          <NewQuestion userId={userId} buttonTitle='Add One Now!' />
         </CardFooter>
       </Card>
     </div>

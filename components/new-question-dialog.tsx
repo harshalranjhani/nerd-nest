@@ -26,10 +26,11 @@ import toast from 'react-hot-toast'
 import { Checkbox } from './ui/checkbox'
 
 export interface NewQuestionProps {
-  userId: string
+  userId: string,
+  buttonTitle: string
 }
 
-export default function NewQuestion({ userId }: NewQuestionProps) {
+export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
   const [title, setTitle] = useState('')
   const [topic, setTopic] = useState('')
   const [question_link, setQuestionLink] = useState('')
@@ -83,7 +84,7 @@ export default function NewQuestion({ userId }: NewQuestionProps) {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button>Add One Now!</Button>
+          <Button>{buttonTitle}</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
