@@ -17,6 +17,17 @@ export async function POST(request: Request) {
     .from('users')
     .select('*')
     .match({ user_id: user_id })
+  
+  // fetch questions from the questions table where the user_id field matches the user_id passed in the request
+  const { data: questions } = await supabase
+    .from('questions')
+    .select('*')
+    .match({ user_id: user_id })
+  
+  const dataToBeSent = {
+    userData: data,
+    questionsData: questions
+  }
 
-  return new Response(JSON.stringify(data), { status: 200 })
+  return new Response(JSON.stringify(dataToBeSent), { status: 200 })
 }

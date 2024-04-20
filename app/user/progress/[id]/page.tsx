@@ -50,7 +50,8 @@ export default async function Dashboard({
 }: ChatPageProps): Promise<any> {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
-  const userDetails = await getUserDetails(params.id)
+  const dataReceived = await getUserDetails(params.id)
+  const userDetails = dataReceived?.userData[0]
   console.log(userDetails?.leetcode_username)
   const data = await getLeetCodeDetails(userDetails?.leetcode_username)
   if(!data || !data.matchedUserStats) {
@@ -102,6 +103,9 @@ export default async function Dashboard({
             <Link href={`/user/settings/${session?.user?.id}`}>General</Link>
             <Link href="#" className="font-semibold text-primary">
               Progress
+            </Link>
+            <Link href={`/user/questions/${session?.user?.id}`}>
+              Custom
             </Link>
           </nav>
           <div className="grid gap-6">

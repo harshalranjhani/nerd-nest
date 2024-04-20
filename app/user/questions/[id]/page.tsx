@@ -25,38 +25,12 @@ import { cookies } from 'next/headers'
 import { auth } from '@/auth'
 import { redirect } from 'next/dist/server/api-utils'
 import LeetCode from '@/components/leetcode'
+import NoQuestions from '@/components/no-questions'
+import { getUserDetails } from '../../settings/[id]/page'
 
 export interface ChatPageProps {
   params: {
     id: string
-  }
-}
-
-export const getUserDetails = async (user_id: string): Promise<any> => {
-  if (!user_id) {
-    return null
-  }
-  if (user_id) {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/user/getUserDetails`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            user_id
-          })
-        }
-      )
-      const data = await response.json()
-      return data
-    } catch (e: any) {
-      console.log(e.message)
-      // toast.error(e.message)
-      return null
-    }
   }
 }
 
@@ -69,8 +43,9 @@ export default async function Dashboard({
   if (params.id !== session?.user?.id) {
     return null
   }
-  const dataReceived = await getUserDetails(params.id)
-  const userDetails = dataReceived.userData[0]
+  const receivedData = await getUserDetails(params.id)
+  console.log(receivedData)
+  const userDetails = receivedData?.userData[0]
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
@@ -82,16 +57,14 @@ export default async function Dashboard({
             className="grid gap-4 text-sm text-muted-foreground"
             x-chunk="dashboard-04-chunk-0"
           >
-            <Link href="#" className="font-semibold text-primary">
-              General
-            </Link>
+            <Link href={`/user/settings/${session?.user?.id}`}>General</Link>
             <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
-            <Link href={`/user/questions/${session?.user?.id}`}>
+            <Link className="font-semibold text-primary" href="#">
               Custom
             </Link>
           </nav>
           <div className="grid gap-6">
-            <LeetCode userId={session?.user?.id} leetcode_username={userDetails?.leetcode_username} />
+            {!receivedData.questionsData && <NoQuestions userId={session?.user?.id || ""} />}
           </div>
         </div>
       </main>
