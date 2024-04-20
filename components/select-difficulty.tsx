@@ -10,11 +10,21 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export default function Difficulty() {
+export interface DifficultyProps {
+    difficulty: string,
+    setDifficulty: (difficulty: string) => void
+}
+
+export default function Difficulty({difficulty, setDifficulty}: DifficultyProps) {
   return (
-    <Select>
+    <Select 
+    onValueChange={(value) => {
+        setDifficulty(value)
+    }}
+    value={difficulty}
+    >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Easy" />
+        <SelectValue placeholder={difficulty} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

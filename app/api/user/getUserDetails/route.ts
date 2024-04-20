@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   const { data: questions } = await supabase
     .from('questions')
     .select('*')
-    .match({ user_id: user_id })
+    .match({ user: user_id })
   
   const dataToBeSent = {
     userData: data,
