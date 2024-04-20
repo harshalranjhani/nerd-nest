@@ -37,6 +37,7 @@ import {
 } from '@/components/ui/table'
 import { IconExternalLink } from '@/components/ui/icons'
 import { getUserDetails } from '../../settings/[id]/page'
+import LeetCodeNotFound from '@/components/leetcode-not-found'
 
 export interface ChatPageProps {
   params: {
@@ -52,8 +53,8 @@ export default async function Dashboard({
   const userDetails = await getUserDetails(params.id)
   console.log(userDetails?.leetcode_username)
   const data = await getLeetCodeDetails(userDetails?.leetcode_username)
-  if(!data) {
-    return null
+  if(!data || !data.matchedUserStats) {
+    return <div className='w-full h-full flex justify-center items-center mt-40'><LeetCodeNotFound userId={session?.user?.id || ""} /></div>
   }
 
   if (params.id !== session?.user?.id) {
@@ -146,7 +147,7 @@ export default async function Dashboard({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.recentSubmissions.map((submission: any) => (
+                {data?.recentSubmissions?.map((submission: any) => (
                   <TableRow key={submission.timestamp}>
                     <TableCell>
                       <a
