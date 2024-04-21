@@ -25,6 +25,7 @@ import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Checkbox } from './ui/checkbox'
 import { Question } from './questions-table'
+import { DialogClose } from '@radix-ui/react-dialog'
 
 export interface NewQuestionProps {
   //   userId: string,
@@ -106,6 +107,7 @@ export default function EditQuestion({
         }}
       >
         <DialogHeader>
+          <DialogClose />
           <DialogTitle>Edit Question</DialogTitle>
           <DialogDescription>
             Edit the question details below.
@@ -189,9 +191,19 @@ export default function EditQuestion({
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={editQuestion}>
-            Done
-          </Button>
+          <div className="flex justify-between w-[100%]">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setIsOpen(false)
+              }}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" onClick={editQuestion}>
+              {loading ? 'Updating...' : 'Save'}
+            </Button>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
