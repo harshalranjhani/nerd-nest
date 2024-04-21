@@ -39,7 +39,8 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { IconExternalLink } from './ui/icons'
+import { IconCheck, IconClose, IconEdit, IconExternalLink } from './ui/icons'
+import EditQuestion from './edit-question-dialog'
 
 export type Question = {
   id: string
@@ -102,7 +103,7 @@ export const columns: ColumnDef<Question>[] = [
     header: 'Question',
     cell: ({ row }) => {
       return row.getValue('question_link') ? (
-        <a href={row.getValue('question_link')}>
+        <a href={row.getValue('question_link')} target="_blank">
           <IconExternalLink />
         </a>
       ) : (
@@ -115,12 +116,19 @@ export const columns: ColumnDef<Question>[] = [
     header: 'Solution',
     cell: ({ row }) => {
       return row.getValue('solution_link') ? (
-        <a href={row.getValue('solution_link')}>
+        <a href={row.getValue('solution_link')} target="_blank">
           <IconExternalLink />
         </a>
       ) : (
         <span className="text-muted-foreground">!</span>
       )
+    }
+  },
+  {
+    accessorKey: 'is_solved',
+    header: 'Status',
+    cell: ({ row }) => {
+      return row.getValue('is_solved') ? <IconCheck /> : <IconClose />
     }
   },
   {
@@ -139,18 +147,16 @@ export const columns: ColumnDef<Question>[] = [
           <DropdownMenuContent align="end">
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem>
-              {question.is_solved
-                ? 'Mark as Unsolved'
-                : 'Mark as Solved'}
+              {question.is_solved ? 'Mark as Unsolved' : 'Mark as Solved'}
             </DropdownMenuItem>
             <DropdownMenuItem>
               {question.starred ? 'Unstar' : 'Star'}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-                Edit
+              <EditQuestion question={question} buttonTitle='Edit' />
             </DropdownMenuItem>
-            <DropdownMenuItem>Remove Question</DropdownMenuItem>
+            {/* <DropdownMenuItem>Remove Question</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -279,10 +285,10 @@ export default function QuestionsTable({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        {/* <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
+        </div> */}
         <div className="space-x-2">
           <Button
             variant="outline"

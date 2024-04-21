@@ -46,7 +46,6 @@ export default async function Dashboard({
     return null
   }
   const receivedData = await getUserDetails(params.id)
-  console.log(receivedData)
   const userDetails = receivedData?.userData[0]
   return (
     <div className="flex min-h-screen w-full flex-col">
