@@ -41,6 +41,7 @@ import {
 } from '@/components/ui/table'
 import { IconCheck, IconClose, IconEdit, IconExternalLink } from './ui/icons'
 import EditQuestion from './edit-question-dialog'
+import toast from 'react-hot-toast'
 
 export type Question = {
   id: string
@@ -53,6 +54,33 @@ export type Question = {
   difficulty: string
   solution_link?: string
   is_solved: boolean
+}
+
+const starQuestion = async (
+  user_id: string,
+  question_id: string,
+  is_starred: boolean
+) => {
+  try {
+    const response = await fetch('/api/user/starQuestion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id,
+        question_id,
+        is_starred
+      })
+    })
+    if (!response.ok) {
+      throw new Error('Failed to star question')
+    }
+    const data = await response.json()
+    toast.success(is_starred ? 'Question starred!' : 'Question unstarred!')
+  } catch (e: any) {
+    toast.error(e.message)
+  }
 }
 
 export const columns: ColumnDef<Question>[] = [
@@ -147,11 +175,24 @@ export const columns: ColumnDef<Question>[] = [
           <DropdownMenuContent align="end">
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem>
-             <Button variant="outline" className='w-[100%]'> {question.starred ? 'Unstar' : 'Star'}</Button>
+              <Button
+                variant="outline"
+                className="w-[100%]"
+                onClick={() => {
+                  starQuestion(
+                    question.user,
+                    question.id,
+                    question.starred ? false : true
+                  )
+                }}
+              >
+                {' '}
+                {question.starred ? 'Unstar' : 'Star'}
+              </Button>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <EditQuestion question={question} buttonTitle='Edit' />
+              <EditQuestion question={question} buttonTitle="Edit" />
             </DropdownMenuItem>
             {/* <DropdownMenuItem>Remove Question</DropdownMenuItem> */}
           </DropdownMenuContent>
