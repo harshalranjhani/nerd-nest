@@ -147,10 +147,7 @@ export const columns: ColumnDef<Question>[] = [
           <DropdownMenuContent align="end">
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem>
-              {question.is_solved ? 'Mark as Unsolved' : 'Mark as Solved'}
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              {question.starred ? 'Unstar' : 'Star'}
+             <Button variant="outline" className='w-[100%]'> {question.starred ? 'Unstar' : 'Star'}</Button>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

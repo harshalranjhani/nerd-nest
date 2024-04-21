@@ -29,10 +29,40 @@ import NoQuestions from '@/components/no-questions'
 import { getUserDetails } from '../../settings/[id]/page'
 import QuestionsTable from '@/components/questions-table'
 import NewQuestion from '@/components/new-question-dialog'
+import { Progress } from '@/components/ui/progress'
 
 export interface ChatPageProps {
   params: {
     id: string
+  }
+}
+
+async function getStats(user_id: string) {
+  if (!user_id) {
+    return null
+  }
+  if (user_id) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/user/getCustomStats`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id
+          })
+        }
+      )
+      const data = await response.json()
+      console.log(data)
+      return data
+    } catch (e: any) {
+      console.log(e.message)
+      // toast.error(e.message)
+      return null
+    }
   }
 }
 
@@ -46,6 +76,7 @@ export default async function Dashboard({
     return null
   }
   const receivedData = await getUserDetails(params.id)
+  const statData = await getStats(params.id)
   const userDetails = receivedData?.userData[0]
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -65,12 +96,42 @@ export default async function Dashboard({
             </Link>
           </nav>
           <div className="grid gap-6">
+            <span className="text-3xl font-semibold text-primary">
+              Hey there, {userDetails?.name}
+            </span>
+            <div className="md:flex">
+              {statData?.map((stat: any) => (
+                <>
+                  <Card className="md:mx-5">
+                    <CardHeader className="pb-2">
+                      <CardDescription>{stat.difficulty}</CardDescription>
+                      <CardTitle className="text-4xl md:text-2xl">
+                        {stat.solvedQuestions} solved
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-xs text-muted-foreground">
+                        out of {stat.totalQuestions} questions
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Progress value={(stat.solvedQuestions/stat.totalQuestions)*100} />
+                    </CardFooter>
+                  </Card>
+                </>
+              ))}
+            </div>
             {!receivedData.questionsData.length ? (
               <NoQuestions userId={session?.user?.id || ''} />
-            ): <div>
-              <NewQuestion userId={session?.user?.id} buttonTitle="Add More" />
+            ) : (
+              <div>
+                <NewQuestion
+                  userId={session?.user?.id}
+                  buttonTitle="Add More"
+                />
                 <QuestionsTable questions={receivedData?.questionsData} />
-              </div>}
+              </div>
+            )}
           </div>
         </div>
       </main>

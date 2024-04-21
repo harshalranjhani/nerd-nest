@@ -130,8 +130,8 @@ export default async function Dashboard({
                     <CardFooter>
                       <Progress
                         value={
-                          data[stat.totalSolvedSlug] /
-                          data[stat.totalQuestionsSlug]
+                          (data[stat.totalSolvedSlug] /
+                          data[stat.totalQuestionsSlug])*100
                         }
                       />
                     </CardFooter>

@@ -45,6 +45,7 @@ export default function EditQuestion({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
   const editQuestion = async () => {
     if (!title || !topic || !difficulty) {
@@ -71,135 +72,128 @@ export default function EditQuestion({
         })
       })
       const data = await response.json()
-      console.log(data)
-      toast.success('Question added successfully!')
-      setTitle('')
-      setTopic('')
-      setQuestionLink('')
-      setDifficulty('easy')
-      setSolutionLink('')
-      setIsSolved(false)
+      toast.success('Question updated successfully!')
+      // close the dialog
       setLoading(false)
+      setIsOpen(false)
     } catch (e: any) {
       toast.error(e.message)
       setLoading(false)
     }
   }
   return (
-    <div>
-      <Dialog>
-        <DialogTrigger className="w-full" asChild>
-          <Button
-            onClick={e => {
-              e.stopPropagation()
-            }}
-          >
-            {buttonTitle}
-          </Button>
-        </DialogTrigger>
-        <DialogContent
+    <Dialog open={isOpen}>
+      <DialogTrigger className="w-full" asChild>
+        <Button
+          variant="outline"
+          className="w-[100%]"
           onClick={e => {
+            setIsOpen(true)
             e.stopPropagation()
           }}
-          onKeyDown={e => {
-            if (e.key === ' ') {
-              e.stopPropagation();
-            }
-          }}
         >
-          <DialogHeader>
-            <DialogTitle>Edit Question</DialogTitle>
-            <DialogDescription>
-              Edit the question details below.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="title" className="text-right">
-                Title
-              </Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={e => {
-                  setTitle(e.target.value)
-                }}
-                placeholder="Bubble Sort"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="topic" className="text-right">
-                Topic
-              </Label>
-              <Input
-                id="topic"
-                value={topic}
-                onChange={e => {
-                  setTopic(e.target.value)
-                }}
-                placeholder="Sorting Algorithms"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="question_link" className="text-right">
-                Question Link
-              </Label>
-              <Input
-                type="url"
-                id="question_link"
-                value={question_link || ''}
-                onChange={(e: any) => setQuestionLink(e.target.value)}
-                placeholder="https://leetcode.com/problems/sort-an-array/"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="topic" className="text-right">
-                Difficulty
-              </Label>
-              <Difficulty
-                setDifficulty={setDifficulty}
-                difficulty={difficulty}
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="solution_link" className="text-right">
-                Solution / Resource Link
-              </Label>
-              <Input
-                type="url"
-                value={solution_link || ''}
-                onChange={e => setSolutionLink(e.target.value)}
-                id="solution_link"
-                placeholder="https://leetcode.com/problems/sort-an-array/solution/"
-                className="col-span-3"
-              />
-            </div>
-            <div className="m-2 flex w-full justify-center">
-              <Checkbox
-                id="is_solved"
-                onCheckedChange={(value: boolean) => {
-                  setIsSolved(value)
-                }}
-                checked={is_solved}
-              />
-              <label
-                htmlFor="is_solved"
-                className="mx-5 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                I was able to solve this question.
-              </label>
-            </div>
+          {buttonTitle}
+        </Button>
+      </DialogTrigger>
+      <DialogContent
+        onClick={e => {
+          e.stopPropagation()
+        }}
+        onKeyDown={e => {
+          if (e.key === ' ') {
+            e.stopPropagation()
+          }
+        }}
+      >
+        <DialogHeader>
+          <DialogTitle>Edit Question</DialogTitle>
+          <DialogDescription>
+            Edit the question details below.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="title" className="text-right">
+              Title
+            </Label>
+            <Input
+              id="title"
+              value={title}
+              onChange={e => {
+                setTitle(e.target.value)
+              }}
+              placeholder="Bubble Sort"
+              className="col-span-3"
+            />
           </div>
-          <DialogFooter>
-            <Button type="submit" onClick={editQuestion}>
-              Done
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="topic" className="text-right">
+              Topic
+            </Label>
+            <Input
+              id="topic"
+              value={topic}
+              onChange={e => {
+                setTopic(e.target.value)
+              }}
+              placeholder="Sorting Algorithms"
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="question_link" className="text-right">
+              Question Link
+            </Label>
+            <Input
+              type="url"
+              id="question_link"
+              value={question_link || ''}
+              onChange={(e: any) => setQuestionLink(e.target.value)}
+              placeholder="https://leetcode.com/problems/sort-an-array/"
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="topic" className="text-right">
+              Difficulty
+            </Label>
+            <Difficulty setDifficulty={setDifficulty} difficulty={difficulty} />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="solution_link" className="text-right">
+              Solution / Resource Link
+            </Label>
+            <Input
+              type="url"
+              value={solution_link || ''}
+              onChange={e => setSolutionLink(e.target.value)}
+              id="solution_link"
+              placeholder="https://leetcode.com/problems/sort-an-array/solution/"
+              className="col-span-3"
+            />
+          </div>
+          <div className="m-2 flex w-full justify-center">
+            <Checkbox
+              id="is_solved"
+              onCheckedChange={(value: boolean) => {
+                setIsSolved(value)
+              }}
+              checked={is_solved}
+            />
+            <label
+              htmlFor="is_solved"
+              className="mx-5 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              I was able to solve this question.
+            </label>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit" onClick={editQuestion}>
+            Done
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
