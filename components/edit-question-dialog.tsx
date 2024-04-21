@@ -46,7 +46,7 @@ export default function EditQuestion({
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  const addQuestion = async () => {
+  const editQuestion = async () => {
     if (!title || !topic || !difficulty) {
       toast.error('Title, Topic and Difficulty are required')
       return
@@ -54,13 +54,14 @@ export default function EditQuestion({
 
     setLoading(true)
     try {
-      const response = await fetch('/api/user/addNewQuestion', {
+      const response = await fetch('/api/user/editQuestion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          //   user_id: userId,
+          user_id: question.user,
+          id: question.id,
           title,
           topic,
           question_link,
@@ -100,6 +101,11 @@ export default function EditQuestion({
           onClick={e => {
             e.stopPropagation()
           }}
+          onKeyDown={e => {
+            if (e.key === ' ') {
+              e.stopPropagation();
+            }
+          }}
         >
           <DialogHeader>
             <DialogTitle>Edit Question</DialogTitle>
@@ -116,7 +122,7 @@ export default function EditQuestion({
                 id="title"
                 value={title}
                 onChange={e => {
-                    setTitle(e.target.value)
+                  setTitle(e.target.value)
                 }}
                 placeholder="Bubble Sort"
                 className="col-span-3"
@@ -129,7 +135,9 @@ export default function EditQuestion({
               <Input
                 id="topic"
                 value={topic}
-                onChange={e => setTopic(e.target.value)}
+                onChange={e => {
+                  setTopic(e.target.value)
+                }}
                 placeholder="Sorting Algorithms"
                 className="col-span-3"
               />
@@ -141,7 +149,7 @@ export default function EditQuestion({
               <Input
                 type="url"
                 id="question_link"
-                value={question_link}
+                value={question_link || ''}
                 onChange={(e: any) => setQuestionLink(e.target.value)}
                 placeholder="https://leetcode.com/problems/sort-an-array/"
                 className="col-span-3"
@@ -162,7 +170,7 @@ export default function EditQuestion({
               </Label>
               <Input
                 type="url"
-                value={solution_link}
+                value={solution_link || ''}
                 onChange={e => setSolutionLink(e.target.value)}
                 id="solution_link"
                 placeholder="https://leetcode.com/problems/sort-an-array/solution/"
@@ -186,7 +194,7 @@ export default function EditQuestion({
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={addQuestion}>
+            <Button type="submit" onClick={editQuestion}>
               Done
             </Button>
           </DialogFooter>
