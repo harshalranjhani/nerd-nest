@@ -30,9 +30,16 @@ const NoStarred = ({ userId }: LeetCodeProps) => {
         <CardContent>
             This will help you keep track of the questions you find interesting. You can star a question by clicking on the star action on the question row.
         </CardContent>
-        {/* <CardFooter className="border-t px-6 py-4">
-          <NewQuestion userId={userId} buttonTitle='Add One Now!' />
-        </CardFooter> */}
+        <div className='flex justify-center'>
+        <Button
+            className="my-5 bg-teal-400 hover:bg-teal-500"
+            onClick={()=>{
+                window.location.href = `/user/questions/${userId}`
+            }}
+          >
+            Go to Questions
+          </Button>
+        </div>
       </Card>
     </div>
   )
