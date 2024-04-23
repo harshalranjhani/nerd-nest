@@ -97,7 +97,7 @@ export default async function Dashboard({
             <Link href={`/user/questions/${session?.user?.id}`}>Custom</Link>
             <Link href="#" className="font-semibold text-primary">Stars</Link>
           </nav>
-          {!starred ? (
+          {!starred.length ? (
               <NoStarred userId={session?.user?.id || ''} />
             ) : (
               <div>
