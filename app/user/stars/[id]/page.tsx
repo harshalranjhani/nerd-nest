@@ -27,6 +27,7 @@ import { redirect } from 'next/dist/server/api-utils'
 import LeetCode from '@/components/leetcode'
 import { StarsTable } from '@/components/stars-table'
 import NoStarred from '@/components/no-starred.'
+import { getUserDetails } from '../../settings/[id]/page'
 
 export interface ChatPageProps {
   params: {
@@ -34,35 +35,7 @@ export interface ChatPageProps {
   }
 }
 
-export const getUserDetails = async (user_id: string): Promise<any> => {
-  if (!user_id) {
-    return null
-  }
-  if (user_id) {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/user/getUserDetails`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            user_id
-          })
-        }
-      )
-      const data = await response.json()
-      return data
-    } catch (e: any) {
-      console.log(e.message)
-      // toast.error(e.message)
-      return null
-    }
-  }
-}
-
-export const getStarredQuestions = async (user_id: string): Promise<any> => {
+const getStarredQuestions = async (user_id: string): Promise<any> => {
   if (!user_id) {
     return null
   }
