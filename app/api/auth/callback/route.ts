@@ -36,7 +36,7 @@ export async function GET(request: Request) {
             name: supabase_user.user_metadata?.user_name,
           })
           .throwOnError();
-          console.log(data)
+          console.log("User data after signup:",data)
       } else {
         console.log('User already exists, skipping insertion.');
       }
