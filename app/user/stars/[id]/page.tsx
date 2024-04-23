@@ -90,13 +90,12 @@ export default async function Dashboard({
           >
             <Link
               href={`/user/settings/${session?.user?.id}`}
-              className="font-semibold text-primary"
             >
               General
             </Link>
             <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
             <Link href={`/user/questions/${session?.user?.id}`}>Custom</Link>
-            <Link href="#">Stars</Link>
+            <Link href="#" className="font-semibold text-primary">Stars</Link>
           </nav>
           {!starred ? (
               <NoStarred userId={session?.user?.id || ''} />
