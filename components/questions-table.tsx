@@ -43,6 +43,28 @@ import { IconCheck, IconClose, IconEdit, IconExternalLink } from './ui/icons'
 import EditQuestion from './edit-question-dialog'
 import toast from 'react-hot-toast'
 
+const removeQuestion = async (user_id: string, question_id: string) => {
+  try {
+    const response = await fetch('/api/user/removeQuestion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id,
+        question_id
+      })
+    })
+    if (!response.ok) {
+      throw new Error('Failed to remove question')
+    }
+    const data = await response.json()
+    toast.success('Question removed!')
+  } catch (e: any) {
+    toast.error(e.message)
+  }
+}
+
 export type Question = {
   id: string
   created_at: string
@@ -193,6 +215,18 @@ export const columns: ColumnDef<Question>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <EditQuestion question={question} buttonTitle="Edit" />
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button
+                variant="outline"
+                className="w-[100%]"
+                onClick={() => {
+                  removeQuestion(question.user, question.id)
+                }}
+              >
+                {' '}
+                Remove
+              </Button>
             </DropdownMenuItem>
             {/* <DropdownMenuItem>Remove Question</DropdownMenuItem> */}
           </DropdownMenuContent>
