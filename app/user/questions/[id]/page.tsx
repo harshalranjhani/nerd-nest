@@ -94,6 +94,9 @@ export default async function Dashboard({
             <Link className="font-semibold text-primary" href="#">
               Custom
             </Link>
+            <Link href={`/user/stars/${session?.user?.id}`}>
+              Stars
+            </Link>
           </nav>
           <div className="grid gap-6">
             <span className="text-3xl font-semibold text-primary">

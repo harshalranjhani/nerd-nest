@@ -25,6 +25,8 @@ import { cookies } from 'next/headers'
 import { auth } from '@/auth'
 import { redirect } from 'next/dist/server/api-utils'
 import LeetCode from '@/components/leetcode'
+import { StarsTable } from '@/components/stars-table'
+import NoStarred from '@/components/no-starred.'
 
 export interface ChatPageProps {
   params: {
@@ -60,6 +62,35 @@ export const getUserDetails = async (user_id: string): Promise<any> => {
   }
 }
 
+export const getStarredQuestions = async (user_id: string): Promise<any> => {
+  if (!user_id) {
+    return null
+  }
+  if (user_id) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/user/getStarred`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id
+          })
+        }
+      )
+      const data = await response.json()
+      console.log(data)
+      return data
+    } catch (e: any) {
+      console.log(e.message)
+      // toast.error(e.message)
+      return null
+    }
+  }
+}
+
 export default async function Dashboard({
   params
 }: ChatPageProps): Promise<any> {
@@ -70,6 +101,8 @@ export default async function Dashboard({
     return null
   }
   const dataReceived = await getUserDetails(params.id)
+  console.log(dataReceived)
+  const starred = await getStarredQuestions(params.id)
   const userDetails = dataReceived.userData[0]
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -82,20 +115,23 @@ export default async function Dashboard({
             className="grid gap-4 text-sm text-muted-foreground"
             x-chunk="dashboard-04-chunk-0"
           >
-            <Link href="#" className="font-semibold text-primary">
+            <Link
+              href={`/user/settings/${session?.user?.id}`}
+              className="font-semibold text-primary"
+            >
               General
             </Link>
             <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
-            <Link href={`/user/questions/${session?.user?.id}`}>
-              Custom
-            </Link>
-            <Link href={`/user/stars/${session?.user?.id}`}>
-              Stars
-            </Link>
+            <Link href={`/user/questions/${session?.user?.id}`}>Custom</Link>
+            <Link href="#">Stars</Link>
           </nav>
-          <div className="grid gap-6">
-            <LeetCode userId={session?.user?.id} leetcode_username={userDetails?.leetcode_username} />
-          </div>
+          {!starred ? (
+              <NoStarred userId={session?.user?.id || ''} />
+            ) : (
+              <div>
+                <StarsTable questions={starred} />
+              </div>
+            )}
         </div>
       </main>
     </div>

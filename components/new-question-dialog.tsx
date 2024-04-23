@@ -65,7 +65,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
         })
       })
       const data = await response.json()
-      console.log(data)
+      // console.log(data)
       toast.success('Question added successfully!')
       window.location.reload()
       setTitle('')

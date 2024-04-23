@@ -100,6 +100,7 @@ const starQuestion = async (
       throw new Error('Failed to star question')
     }
     const data = await response.json()
+    window.location.reload()
     toast.success(is_starred ? 'Question starred!' : 'Question unstarred!')
   } catch (e: any) {
     toast.error(e.message)
