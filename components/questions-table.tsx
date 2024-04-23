@@ -60,6 +60,7 @@ const removeQuestion = async (user_id: string, question_id: string) => {
     }
     const data = await response.json()
     toast.success('Question removed!')
+    window.location.reload()
   } catch (e: any) {
     toast.error(e.message)
   }
