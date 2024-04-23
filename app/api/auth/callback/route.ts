@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
       if (userExistsError && !userExists) {
         // Only insert if user does not exist
-        await supabase
+        const {data} = await supabase
           .from('users')
           .insert({
             user_id: supabase_user.identities[0].user_id,
@@ -36,6 +36,7 @@ export async function GET(request: Request) {
             name: supabase_user.user_metadata?.user_name,
           })
           .throwOnError();
+          console.log(data)
       } else {
         console.log('User already exists, skipping insertion.');
       }
