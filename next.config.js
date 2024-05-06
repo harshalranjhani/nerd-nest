@@ -9,7 +9,19 @@ module.exports = {
       {
         protocol: 'https',
         hostname: '**.githubusercontent.com'
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'nerd-nest.harshalranjhani.in',
+      },
     ]
   }
 }

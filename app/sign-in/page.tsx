@@ -33,6 +33,7 @@ import { LoginButton } from "@/components/login-button"
 import { cookies } from "next/headers"
 import { auth } from "@/auth"
 import { redirect } from "next/dist/server/api-utils"
+import image from "@/public/Nerd.png"
 
 export default async function SignInPage() {
   const cookieStore = cookies()
@@ -92,8 +93,8 @@ export default async function SignInPage() {
       </div>
       <div className="hidden bg-muted lg:block">
         <Image
-          src="/placeholder.svg"
-          alt="Image"
+          src={image}
+          alt="Nerd Nest"
           width="1920"
           height="1080"
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
