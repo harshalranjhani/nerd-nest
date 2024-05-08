@@ -101,7 +101,7 @@ export default async function Dashboard({
               <NoStarred userId={session?.user?.id || ''} />
             ) : (
               <div>
-                <StarsTable questions={starred} />
+                <StarsTable questions={starred} email={session?.user?.email || ""} />
               </div>
             )}
         </div>

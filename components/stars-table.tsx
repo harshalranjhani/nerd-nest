@@ -9,6 +9,8 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { IconCheck, IconClose, IconExternalLink } from './ui/icons'
+import { Button } from './ui/button'
+import SendMail from './send-mail'
 
 const invoices = [
   {
@@ -56,16 +58,15 @@ const invoices = [
 ]
 
 export interface starsTableProps {
-  questions: any
+  questions: any,
+  email: string
 }
 
-export function StarsTable({ questions }: starsTableProps) {
+export function StarsTable({ questions, email }: starsTableProps) {
   return (
-    <div className='w-[90vw] md:w-full'>
-      <div className="my-5">
-        <span className="text-3xl font-semibold text-primary">
-          Questions that you have starred in the past.
-        </span>
+    <div className="w-[90vw] md:w-full">
+      <div className="my-5 flex flex-col">
+          <SendMail questions={questions} email={email} />
       </div>
       <div>
         <Table>
