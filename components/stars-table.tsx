@@ -61,7 +61,7 @@ export interface starsTableProps {
 
 export function StarsTable({ questions }: starsTableProps) {
   return (
-    <div>
+    <div className='w-[90vw] md:w-full'>
       <div className="my-5">
         <span className="text-3xl font-semibold text-primary">
           Questions that you have starred in the past.
