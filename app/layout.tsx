@@ -12,9 +12,9 @@ import { Header } from '@/components/header'
 export const metadata: Metadata = {
   title: {
     default: 'Nerd Nest',
-    template: `%s - Next.js AI Chatbot`
+    template: `%s - Nerd Nest`
   },
-  description: 'An AI-powered chatbot template built with Next.js and Supabase',
+  description: 'Ask Questions, Track Progress and Evolve!',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' }
