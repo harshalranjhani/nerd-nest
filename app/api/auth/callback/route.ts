@@ -50,7 +50,7 @@ export async function GET(request: Request) {
 
         try {
           const response = await fetch(
-            `https://harshalranjhaniapi.vercel.app/mail/nerd-nest/welcome`,
+            `https://api.harshalranjhani.in/mail/nerd-nest/welcome`,
             {
               method: 'POST',
               headers: {

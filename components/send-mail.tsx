@@ -29,7 +29,7 @@ const SendMail = ({ questions, email }: LeetCodeProps) => {
       email
     }
     try {
-      const response = await fetch(`https://harshalranjhaniapi.vercel.app/mail/questions-pdf`, {
+      const response = await fetch(`https://api.harshalranjhani.in/mail/questions-pdf`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
