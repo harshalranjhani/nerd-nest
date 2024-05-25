@@ -143,7 +143,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="solution_link" className="text-right">
-                Solution Link
+                Solution / Resource Link
               </Label>
               <Input
                 type="url"
