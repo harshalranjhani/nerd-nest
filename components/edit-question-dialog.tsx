@@ -110,7 +110,7 @@ export default function EditQuestion({
           <DialogClose />
           <DialogTitle>Edit Question</DialogTitle>
           <DialogDescription>
-            Edit the question details below.
+            Edit the question details below. <i className='col-span-4 text-center'>Have pdf or image files and nowhere to upload? Check out <a href="https://storage.harshalranjhani.in" target="_blank" className="text-teal-500 underline">storage.harshalranjhani.in</a>!</i>
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
