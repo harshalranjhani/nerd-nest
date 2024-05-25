@@ -65,7 +65,6 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
         })
       })
       const data = await response.json()
-      // console.log(data)
       toast.success('Question added successfully!')
       window.location.reload()
       setTitle('')
@@ -131,6 +130,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
                 placeholder="https://leetcode.com/problems/sort-an-array/"
                 className="col-span-3"
               />
+              <i className='col-span-4 text-center'>Have pdf or image files and nowhere to upload? Check out <a href="https://storage.harshalranjhani.in" target="_blank" className="text-teal-500 underline">storage.harshalranjhani.in</a></i>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="topic" className="text-right">
@@ -143,7 +143,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="solution_link" className="text-right">
-                Solution / Resource Link
+                Solution Link
               </Label>
               <Input
                 type="url"
@@ -170,8 +170,8 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={addQuestion}>
-              Done
+            <Button type="submit" onClick={addQuestion} disabled={loading}>
+              {loading ? "Adding..." : "Done"}
             </Button>
           </DialogFooter>
         </DialogContent>
