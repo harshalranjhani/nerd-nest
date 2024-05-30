@@ -1,72 +1,49 @@
+"use client";
+import * as React from 'react'
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow
 } from '@/components/ui/table'
 import { IconCheck, IconClose, IconExternalLink } from './ui/icons'
 import { Button } from './ui/button'
+import { Input } from '@/components/ui/input'
 import SendMail from './send-mail'
 
-const invoices = [
-  {
-    invoice: 'INV001',
-    paymentStatus: 'Paid',
-    totalAmount: '$250.00',
-    paymentMethod: 'Credit Card'
-  },
-  {
-    invoice: 'INV002',
-    paymentStatus: 'Pending',
-    totalAmount: '$150.00',
-    paymentMethod: 'PayPal'
-  },
-  {
-    invoice: 'INV003',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$350.00',
-    paymentMethod: 'Bank Transfer'
-  },
-  {
-    invoice: 'INV004',
-    paymentStatus: 'Paid',
-    totalAmount: '$450.00',
-    paymentMethod: 'Credit Card'
-  },
-  {
-    invoice: 'INV005',
-    paymentStatus: 'Paid',
-    totalAmount: '$550.00',
-    paymentMethod: 'PayPal'
-  },
-  {
-    invoice: 'INV006',
-    paymentStatus: 'Pending',
-    totalAmount: '$200.00',
-    paymentMethod: 'Bank Transfer'
-  },
-  {
-    invoice: 'INV007',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$300.00',
-    paymentMethod: 'Credit Card'
-  }
-]
-
-export interface starsTableProps {
+export interface StarsTableProps {
   questions: any,
   email: string
 }
 
-export function StarsTable({ questions, email }: starsTableProps) {
+export function StarsTable({ questions, email }: StarsTableProps) {
+  const [filterValue, setFilterValue] = React.useState('')
+  const [filteredQuestions, setFilteredQuestions] = React.useState(questions)
+
+  React.useEffect(() => {
+    setFilteredQuestions(
+      questions.filter((question: any) =>
+        question.title.toLowerCase().includes(filterValue.toLowerCase()) ||
+        question.topic.toLowerCase().includes(filterValue.toLowerCase())
+      )
+    )
+  }, [filterValue, questions])
+
   return (
     <div className="w-[90vw] md:w-full">
       <div className="my-5 flex flex-col">
-          <SendMail questions={questions} email={email} />
+        <SendMail questions={questions} email={email} />
+      </div>
+      <div className="mb-4 flex items-center">
+        <Input
+          placeholder="Filter by title or topic..."
+          value={filterValue}
+          onChange={(e) => setFilterValue(e.target.value)}
+          className="max-w-sm"
+        />
       </div>
       <div>
         <Table>
@@ -82,11 +59,10 @@ export function StarsTable({ questions, email }: starsTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {questions.map((question: any) => (
+            {filteredQuestions.map((question: any) => (
               <TableRow key={question.id}>
                 <TableCell className="font-medium">{question?.title}</TableCell>
                 <TableCell>{question?.topic}</TableCell>
-
                 <TableCell
                   className="capitalize"
                   style={{

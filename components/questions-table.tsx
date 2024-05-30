@@ -197,7 +197,6 @@ export const columns: ColumnDef<Question>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem>
               <Button
                 variant="outline"
@@ -210,7 +209,6 @@ export const columns: ColumnDef<Question>[] = [
                   )
                 }}
               >
-                {' '}
                 {question.starred ? 'Unstar' : 'Star'}
               </Button>
             </DropdownMenuItem>
@@ -226,11 +224,9 @@ export const columns: ColumnDef<Question>[] = [
                   removeQuestion(question.user, question.id)
                 }}
               >
-                {' '}
                 Remove
               </Button>
             </DropdownMenuItem>
-            {/* <DropdownMenuItem>Remove Question</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -269,6 +265,16 @@ export default function QuestionsTable({
       columnFilters,
       columnVisibility,
       rowSelection
+    },
+    globalFilterFn: (row, columnId, filterValue) => {
+      return (
+        row.original.title
+          .toLowerCase()
+          .includes(filterValue.toLowerCase()) ||
+        row.original.topic
+          .toLowerCase()
+          .includes(filterValue.toLowerCase())
+      )
     }
   })
 
@@ -276,10 +282,10 @@ export default function QuestionsTable({
     <div className='w-[90vw] md:w-full'>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter topics..."
-          value={(table.getColumn('topic')?.getFilterValue() as string) ?? ''}
+          placeholder="Filter by title or topic..."
+          value={table.getState().globalFilter ?? ''}
           onChange={event => {
-            table.getColumn('topic')?.setFilterValue(event.target.value)
+            table.setGlobalFilter(event.target.value)
           }}
           className="max-w-sm"
         />
@@ -359,10 +365,6 @@ export default function QuestionsTable({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        {/* <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{' '}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div> */}
         <div className="space-x-2">
           <Button
             variant="outline"
