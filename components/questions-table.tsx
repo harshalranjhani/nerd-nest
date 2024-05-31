@@ -42,29 +42,15 @@ import {
 import { IconCheck, IconClose, IconEdit, IconExternalLink } from './ui/icons'
 import EditQuestion from './edit-question-dialog'
 import toast from 'react-hot-toast'
-
-const removeQuestion = async (user_id: string, question_id: string) => {
-  try {
-    const response = await fetch('/api/user/removeQuestion', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user_id,
-        question_id
-      })
-    })
-    if (!response.ok) {
-      throw new Error('Failed to remove question')
-    }
-    const data = await response.json()
-    toast.success('Question removed!')
-    window.location.reload()
-  } catch (e: any) {
-    toast.error(e.message)
-  }
-}
+import { DialogTrigger } from '@radix-ui/react-dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle
+} from '@radix-ui/react-dialog'
+import { DialogHeader } from '@/components/ui/dialog'
+import { RemoveQuestion } from './remove-question-dialog'
 
 export type Question = {
   id: string
@@ -217,15 +203,16 @@ export const columns: ColumnDef<Question>[] = [
               <EditQuestion question={question} buttonTitle="Edit" />
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Button
-                variant="outline"
-                className="w-[100%]"
-                onClick={() => {
-                  removeQuestion(question.user, question.id)
+              <div
+                onClick={e => {
+                  e.stopPropagation()
                 }}
               >
-                Remove
-              </Button>
+                <RemoveQuestion
+                  user_id={question.user}
+                  question_id={question.id}
+                />
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -268,18 +255,14 @@ export default function QuestionsTable({
     },
     globalFilterFn: (row, columnId, filterValue) => {
       return (
-        row.original.title
-          .toLowerCase()
-          .includes(filterValue.toLowerCase()) ||
-        row.original.topic
-          .toLowerCase()
-          .includes(filterValue.toLowerCase())
+        row.original.title.toLowerCase().includes(filterValue.toLowerCase()) ||
+        row.original.topic.toLowerCase().includes(filterValue.toLowerCase())
       )
     }
   })
 
   return (
-    <div className='w-[90vw] md:w-full'>
+    <div className="w-[90vw] md:w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter by title or topic..."
