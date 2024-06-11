@@ -57,6 +57,11 @@ export async function Header() {
         </div>
       </div>
       <div className="flex items-center justify-end space-x-2">
+      <Button className="my-5">
+          <Link href={`/`}>
+            Home
+          </Link>
+        </Button>
         <Button className="my-5 bg-teal-400 hover:bg-teal-500">
           <Link href={`/user/questions/${session?.user?.id}`}>
             Track your progress
