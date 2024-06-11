@@ -116,7 +116,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
           <Input
             value={previewTokenInput}
             placeholder="OpenAI API key"
-            onChange={e => setPreviewTokenInput(e.target.value)}
+            onChange={(e: any) => setPreviewTokenInput(e.target.value)}
           />
           <DialogFooter className="items-center">
             <Button

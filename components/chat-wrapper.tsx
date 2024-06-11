@@ -36,7 +36,7 @@ export default function ChatWrapper({ chat, session }: ChatWrapperProps) {
   }
 
   if (loaded && !hasApiKey) {
-    return <NoGPTKey userId={session?.user?.id} />
+    return <NoGPTKey userId={session?.user?.id || ""} />
   }
 
   return <Chat id={chat.id} initialMessages={chat.messages} />
