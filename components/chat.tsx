@@ -20,6 +20,9 @@ import { useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
+import { useEffect } from 'react'
+import * as CryptoJS from 'crypto-js'
+import { useToast } from './ui/use-toast'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -32,19 +35,40 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     'ai-token',
     null
   )
+  const [apiKey, setApiKey] = useState('')
   const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
+  const { toast } = useToast()
+
+  useEffect(() => {
+    // check if the api key is already saved in the browser
+    const encryptedApiKey = localStorage?.getItem('nerd-nest-gpt-api-key')
+    if (encryptedApiKey) {
+      // decrypt the api key
+      const decryptedApiKey = CryptoJS.AES.decrypt(
+        encryptedApiKey,
+        'SOME-ENCRYPTION-KEY'
+      )
+      setApiKey(decryptedApiKey.toString(CryptoJS.enc.Utf8))
+    }
+  }, [])
+
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
       body: {
         id,
-        previewToken
+        previewToken,
+        apiKey
       },
       onResponse(response) {
-        if (response.status === 401) {
-          toast.error(response.statusText)
+        console.log(response)
+        if (!response.ok) {
+          toast({
+            duration: 1000,
+            description: 'Invalid API key. Please enter a valid API key.'
+          })
         }
       }
     })

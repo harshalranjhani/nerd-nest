@@ -25,6 +25,7 @@ import { cookies } from 'next/headers'
 import { auth } from '@/auth'
 import { redirect } from 'next/dist/server/api-utils'
 import LeetCode from '@/components/leetcode'
+import GPTKey from '@/components/gpt-key'
 
 export interface ChatPageProps {
   params: {
@@ -71,6 +72,8 @@ export default async function Dashboard({
   }
   const dataReceived = await getUserDetails(params.id)
   const userDetails = dataReceived.userData[0]
+
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
@@ -95,6 +98,7 @@ export default async function Dashboard({
           </nav>
           <div className="grid gap-6">
             <LeetCode userId={session?.user?.id} leetcode_username={userDetails?.leetcode_username} />
+            <GPTKey />
           </div>
         </div>
       </main>

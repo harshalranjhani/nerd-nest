@@ -1,10 +1,12 @@
-import { nanoid } from '@/lib/utils'
-import { Chat } from '@/components/chat'
+import { auth } from '@/auth'
+import Main from '@/components/main'
+import { cookies } from 'next/headers'
 
 export const runtime = 'edge'
 
-export default function IndexPage() {
-  const id = nanoid()
+export default async function IndexPage() {
+  const cookieStore = cookies()
+  const session = await auth({ cookieStore })
 
-  return <Chat id={id} />
+  return <Main session={session} />
 }

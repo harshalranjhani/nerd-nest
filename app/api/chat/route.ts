@@ -10,24 +10,23 @@ import { nanoid } from '@/lib/utils'
 
 export const runtime = 'edge'
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
-})
-
-const openai = new OpenAIApi(configuration)
-
 export async function POST(req: Request) {
-  if(!configuration.apiKey) {
-    return new Response('Unauthorized', {
-      status: 401
-    })
-  }
   const cookieStore = cookies()
   const supabase = createRouteHandlerClient<Database>({
     cookies: () => cookieStore
   })
   const json = await req.json()
-  const { messages, previewToken } = json
+  const { messages, previewToken, apiKey } = json
+  if (!apiKey) {
+    return new Response('Unauthorized', {
+      status: 401
+    })
+  }
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY
+  })
+
+  const openai = new OpenAIApi(configuration)
   const userId = (await auth({ cookieStore }))?.user.id
 
   if (!userId) {
@@ -42,10 +41,11 @@ export async function POST(req: Request) {
 
   const systemMessage = {
     role: 'system',
-    content: "Assume the role of an expert career advisor and educator specializing in computer science. Your primary expertise is in helping students with Data Structures and Algorithms (DSA). You provide comprehensive guidance on solving complex DSA problems, offer tips for optimizing code, and help with understanding core concepts in computer science. Additionally, you assist students with career advice tailored to tech industry roles, including preparing for technical interviews, resume tips, and strategies for securing internships and jobs in tech companies. Your responses should be educational, encouraging, and focused on delivering practical advice and detailed explanations."
-  };
+    content:
+      'Assume the role of an expert career advisor and educator specializing in computer science. Your primary expertise is in helping students with Data Structures and Algorithms (DSA). You provide comprehensive guidance on solving complex DSA problems, offer tips for optimizing code, and help with understanding core concepts in computer science. Additionally, you assist students with career advice tailored to tech industry roles, including preparing for technical interviews, resume tips, and strategies for securing internships and jobs in tech companies. Your responses should be educational, encouraging, and focused on delivering practical advice and detailed explanations.'
+  }
 
-  const adjustedMessages = [systemMessage, ...messages];
+  const adjustedMessages = [systemMessage, ...messages]
 
   const res = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo-0125',
