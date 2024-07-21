@@ -77,6 +77,7 @@ export function ShareList({ questions }: any) {
           <Button
             className="bg-teal-400 px-3 hover:bg-teal-500"
             onClick={sendEmail}
+            disabled={loading}
             size="sm"
           >
             <span className="sr-only">Send</span>
