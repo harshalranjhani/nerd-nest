@@ -13,6 +13,7 @@ import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import NewQuestion from './new-question-dialog'
 import toast from 'react-hot-toast'
+import { ShareList } from './ui/share-starred-list'
 
 export interface LeetCodeProps {
   questions: any
@@ -67,12 +68,13 @@ const SendMail = ({ questions, email }: LeetCodeProps) => {
         </CardContent>
         <div className="flex justify-center">
           <Button
-            className="my-5 bg-teal-400 hover:bg-teal-500"
+            className="m-2 my-5 bg-teal-400 hover:bg-teal-500"
             onClick={sendEmail}
             disabled={loading}
           >
             {loading ? 'Processing...' : 'Email me questions'}
           </Button>
+          <ShareList questions={questions} />
         </div>
       </Card>
     </div>
