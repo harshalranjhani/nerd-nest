@@ -26,10 +26,40 @@ import { auth } from '@/auth'
 import { redirect } from 'next/dist/server/api-utils'
 import LeetCode from '@/components/leetcode'
 import GPTKey from '@/components/gpt-key'
+import Note from '@/components/note'
+import Notes from '@/components/notes-page'
 
 export interface ChatPageProps {
   params: {
     id: string
+  }
+}
+
+export const getNotes = async (user_id: string): Promise<any> => {
+  if (!user_id) {
+    return null
+  }
+  if (user_id) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/user/getAllNotes`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id
+          })
+        }
+      )
+      const data = await response.json()
+      return data
+    } catch (e: any) {
+      console.log(e.message)
+      // toast.error(e.message)
+      return null
+    }
   }
 }
 
@@ -43,6 +73,7 @@ export default async function Dashboard({
     return null
   }
 
+  const notes = await getNotes(params.id);
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -70,7 +101,13 @@ export default async function Dashboard({
             </Link>
           </nav>
           <div className="grid gap-6">
-
+            <div className='flex w-[100%] justify-around'>
+            <div className='text-white text-3xl font-bold'>Your notes</div>
+            <Button className='text-sm md:text-xl'>Add new</Button>
+            </div>
+            <div>
+              <Notes notes={notes} />
+            </div>
           </div>
         </div>
       </main>
