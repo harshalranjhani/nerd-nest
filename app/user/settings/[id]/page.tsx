@@ -95,6 +95,9 @@ export default async function Dashboard({
             <Link href={`/user/stars/${session?.user?.id}`}>
               Stars
             </Link>
+            <Link href={`/user/notes/${session?.user?.id}`}>
+              Notes
+            </Link>
           </nav>
           <div className="grid gap-6">
             <LeetCode userId={session?.user?.id} leetcode_username={userDetails?.leetcode_username} />
