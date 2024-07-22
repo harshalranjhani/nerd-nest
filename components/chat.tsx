@@ -62,8 +62,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         previewToken,
         apiKey
       },
-      onResponse(response) {
-        console.log(response)
+      async onResponse(response) {
         if (!response.ok) {
           toast({
             duration: 1000,

@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     })
   }
   const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: apiKey
   })
 
   const openai = new OpenAIApi(configuration)
