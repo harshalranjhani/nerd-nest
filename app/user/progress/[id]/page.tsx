@@ -52,7 +52,6 @@ export default async function Dashboard({
   const session = await auth({ cookieStore })
   const dataReceived = await getUserDetails(params.id)
   const userDetails = dataReceived?.userData[0]
-  console.log(userDetails?.leetcode_username)
   const data = await getLeetCodeDetails(userDetails?.leetcode_username)
   if(!data || !data.matchedUserStats) {
     return <div className='w-full h-full flex justify-center items-center mt-40'><LeetCodeNotFound userId={session?.user?.id || ""} /></div>

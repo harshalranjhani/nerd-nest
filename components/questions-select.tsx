@@ -29,7 +29,6 @@ export function QuestionSelect({ userId, setQuestionReferenced }: { userId: stri
         })
       })
       const data = await response.json()
-      console.log(data)
       setQuestions(data)
     } catch (e) {
       toast.error('Failed to fetch questions')
@@ -37,7 +36,6 @@ export function QuestionSelect({ userId, setQuestionReferenced }: { userId: stri
   }
 
   const handleSelectChange = (value: string) => {
-    console.log(value)
     setQuestionReferenced(value)
   }
 

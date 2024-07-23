@@ -8,7 +8,6 @@ export interface NotesProps {
 
 const Notes = ({ notes }: NotesProps) => {
   const [notesArray, setNotesArray] = useState(notes)
-  console.log(notesArray)
   return (
     <div>
       {notesArray?.map((note: any) => {

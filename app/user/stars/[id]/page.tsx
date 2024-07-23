@@ -54,7 +54,6 @@ const getStarredQuestions = async (user_id: string): Promise<any> => {
         }
       )
       const data = await response.json()
-      console.log(data)
       return data
     } catch (e: any) {
       console.log(e.message)
@@ -74,7 +73,6 @@ export default async function Dashboard({
     return null
   }
   const dataReceived = await getUserDetails(params.id)
-  console.log(dataReceived)
   const starred = await getStarredQuestions(params.id)
   const userDetails = dataReceived.userData[0]
   return (

@@ -18,7 +18,6 @@ export const NoteViewModal: React.FC<NoteModalProps> = ({
   data
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  console.log(data)
 
   useEffect(() => {
     setIsMounted(true);
