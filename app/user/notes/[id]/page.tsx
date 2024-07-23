@@ -28,6 +28,7 @@ import LeetCode from '@/components/leetcode'
 import GPTKey from '@/components/gpt-key'
 import Note from '@/components/note'
 import Notes from '@/components/notes-page'
+import AddNote from '@/components/new-note-dialog'
 
 export interface ChatPageProps {
   params: {
@@ -103,7 +104,7 @@ export default async function Dashboard({
           <div className="grid gap-6">
             <div className='flex w-[100%] justify-around'>
             <div className='text-white text-3xl font-bold'>Your notes</div>
-            <Button className='text-sm md:text-xl'>Add new</Button>
+            <AddNote buttonTitle='Add new' userId={session?.user?.id} />
             </div>
             <div>
               <Notes notes={notes} />

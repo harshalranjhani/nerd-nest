@@ -11,7 +11,7 @@ const Notes = ({ notes }: NotesProps) => {
   console.log(notesArray)
   return (
     <div>
-      {notesArray.map((note: any) => {
+      {notesArray?.map((note: any) => {
         return <Note key={note.id} note={note} />
       })}
     </div>
