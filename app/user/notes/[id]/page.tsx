@@ -36,7 +36,7 @@ export interface ChatPageProps {
   }
 }
 
-export const getNotes = async (user_id: string): Promise<any> => {
+const getNotes = async (user_id: string): Promise<any> => {
   if (!user_id) {
     return null
   }
