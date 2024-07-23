@@ -1,39 +1,31 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
-import { ExternalLinkIcon } from 'lucide-react'
-import { Badge } from './ui/badge'
-import { useState } from 'react'
-import { NoteViewModal } from './view-note-modal'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ExternalLinkIcon } from 'lucide-react';
+import { Badge } from './ui/badge';
+import { useState } from 'react';
+import { NoteViewModal } from './view-note-modal';
 
 export interface NoteProps {
-  note: any
+  note: any;
 }
 
 export default function Note({ note }: NoteProps) {
-  const [viewNoteModal, setViewNoteModal] = useState(false as boolean)
-  const [viewNoteModalLoading, setViewNoteModalLoading] = useState(
-    false as boolean
-  )
+  const [viewNoteModal, setViewNoteModal] = useState(false as boolean);
+  const [viewNoteModalLoading, setViewNoteModalLoading] = useState(false as boolean);
 
   const formatDate = (dateString: string) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-    return new Date(dateString).toLocaleDateString('en-GB')
-  }
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('en-GB', options);
+  };
 
   return (
     <>
       <NoteViewModal
         loading={viewNoteModalLoading}
         onClose={() => {
-          setViewNoteModal(false)
+          setViewNoteModal(false);
         }}
         isOpen={viewNoteModal}
         data={note}
@@ -43,19 +35,12 @@ export default function Note({ note }: NoteProps) {
           <div className="flex flex-col items-center justify-between md:flex-row">
             <div>
               <CardTitle>{note?.title}</CardTitle>
-              <CardDescription>
-                {note?.questions?.title || 'No question referenced.'}
-              </CardDescription>
+              <CardDescription>{note?.questions?.title || 'No question referenced.'}</CardDescription>
             </div>
             <div className="mt-2 flex items-center space-x-2 md:mt-0 md:space-x-4">
               {note?.links &&
                 note?.links.map((link: string, index: number) => (
-                  <a
-                    key={index}
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a key={index} href={link} target="_blank" rel="noopener noreferrer">
                     <ExternalLinkIcon className="text-gray-600 hover:text-gray-800" />
                   </a>
                 ))}
@@ -65,70 +50,42 @@ export default function Note({ note }: NoteProps) {
         <CardContent>
           <div className="flex items-center justify-between">
             <div>
-              <Button
-                size="sm"
-                variant="secondary"
-                className="mr-2"
-                onClick={() => {
-                  setViewNoteModal(true)
-                }}
-              >
+              <Button size="sm" variant="secondary" className="mr-2" onClick={() => setViewNoteModal(true)}>
                 View
               </Button>
               {note?.questions?.question_link && (
-                <a
-                  href={note.questions.question_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={note.questions.question_link} target="_blank" rel="noopener noreferrer">
                   <Button size="sm" variant="secondary" className="mr-2">
                     Question
                   </Button>
                 </a>
               )}
               {note?.questions?.solution_link && (
-                <a
-                  href={note.questions.solution_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={note.questions.solution_link} target="_blank" rel="noopener noreferrer">
                   <Button size="sm" variant="secondary" className="mr-2">
                     Solution
                   </Button>
                 </a>
               )}
               {!note?.questions?.solution_link && (
-                <a
-                  href={note?.questions?.solution_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={note?.questions?.solution_link} target="_blank" rel="noopener noreferrer">
                   <Badge variant="secondary" className="bg-teal-400 text-black">
                     No solution link
                   </Badge>
                 </a>
               )}
               {!note?.questions?.question_link && (
-                <a
-                  href={note?.questions?.solution_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Badge
-                    variant="secondary"
-                    className="mx-2 bg-teal-400 text-black"
-                  >
+                <a href={note?.questions?.solution_link} target="_blank" rel="noopener noreferrer">
+                  <Badge variant="secondary" className="mx-2 bg-teal-400 text-black">
                     No question link
                   </Badge>
                 </a>
               )}
             </div>
-            <div className="text-sm text-gray-500">
-              {formatDate(note.created_at)}
-            </div>
+            <div className="text-sm text-gray-500">{formatDate(note.created_at)}</div>
           </div>
         </CardContent>
       </Card>
     </>
-  )
+  );
 }

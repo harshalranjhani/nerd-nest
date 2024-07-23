@@ -128,3 +128,31 @@ export async function getLeetCodeDetails(username: string) {
   const data = await response.json()
   return data
 }
+
+export const getNotes = async (user_id: string): Promise<any> => {
+  if (!user_id) {
+    return null
+  }
+  if (user_id) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/user/getAllNotes`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id
+          })
+        }
+      )
+      const data = await response.json()
+      return data
+    } catch (e: any) {
+      console.log(e.message)
+      // toast.error(e.message)
+      return null
+    }
+  }
+}

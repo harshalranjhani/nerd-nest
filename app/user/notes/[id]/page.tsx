@@ -1,77 +1,45 @@
-import Link from 'next/link'
-import { CircleUser, Menu, Package2, Search } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
+import Link from 'next/link';
+import { CircleUser, Menu, Package2, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
-} from '@/components/ui/card'
-// import { Checkbox } from "@/components/ui/checkbox"
+  CardTitle,
+} from '@/components/ui/card';
+// import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { cookies } from 'next/headers'
-import { auth } from '@/auth'
-import { redirect } from 'next/dist/server/api-utils'
-import LeetCode from '@/components/leetcode'
-import GPTKey from '@/components/gpt-key'
-import Note from '@/components/note'
-import Notes from '@/components/notes-page'
-import AddNote from '@/components/new-note-dialog'
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { cookies } from 'next/headers';
+import { auth } from '@/auth';
+import { redirect } from 'next/dist/server/api-utils';
+import Note from '@/components/note';
+import Notes from '@/components/notes-page';
+import AddNote from '@/components/new-note-dialog';
+import { getNotes } from '@/app/actions';
 
 export interface ChatPageProps {
   params: {
-    id: string
-  }
+    id: string;
+  };
 }
 
-const getNotes = async (user_id: string): Promise<any> => {
-  if (!user_id) {
-    return null
-  }
-  if (user_id) {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/user/getAllNotes`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            user_id
-          })
-        }
-      )
-      const data = await response.json()
-      return data
-    } catch (e: any) {
-      console.log(e.message)
-      // toast.error(e.message)
-      return null
-    }
-  }
-}
-
-export default async function Dashboard({
-  params
-}: ChatPageProps): Promise<any> {
-  const cookieStore = cookies()
-  const session = await auth({ cookieStore })
+export default async function Dashboard({ params }: ChatPageProps): Promise<any> {
+  const cookieStore = cookies();
+  const session = await auth({ cookieStore });
 
   if (params.id !== session?.user?.id) {
-    return null
+    return null;
   }
 
   const notes = await getNotes(params.id);
@@ -83,28 +51,19 @@ export default async function Dashboard({
           <h1 className="text-3xl font-semibold">Settings</h1>
         </div>
         <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-          <nav
-            className="grid gap-4 text-sm text-muted-foreground"
-            x-chunk="dashboard-04-chunk-0"
-          >
-            <Link href={`/user/settings/${session?.user?.id}`}>
-              General
-            </Link>
+          <nav className="grid gap-4 text-sm text-muted-foreground" x-chunk="dashboard-04-chunk-0">
+            <Link href={`/user/settings/${session?.user?.id}`}>General</Link>
             <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
-            <Link href={`/user/questions/${session?.user?.id}`}>
-              Custom
-            </Link>
-            <Link href={`/user/stars/${session?.user?.id}`}>
-              Stars
-            </Link>
+            <Link href={`/user/questions/${session?.user?.id}`}>Custom</Link>
+            <Link href={`/user/stars/${session?.user?.id}`}>Stars</Link>
             <Link href="#" className="font-semibold text-primary">
               Notes
             </Link>
           </nav>
           <div className="grid gap-6">
-            <div className='flex w-[100%] justify-around'>
-            <div className='text-white text-3xl font-bold'>Your notes</div>
-            <AddNote buttonTitle='Add new' userId={session?.user?.id} />
+            <div className="flex w-[100%] justify-around">
+              <div className="text-white text-3xl font-bold">Your notes</div>
+              <AddNote buttonTitle="Add new" userId={session?.user?.id} />
             </div>
             <div>
               <Notes notes={notes} />
@@ -113,5 +72,5 @@ export default async function Dashboard({
         </div>
       </main>
     </div>
-  )
+  );
 }

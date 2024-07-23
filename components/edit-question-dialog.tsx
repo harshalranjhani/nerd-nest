@@ -27,7 +27,7 @@ import { Checkbox } from './ui/checkbox'
 import { Question } from './questions-table'
 import { DialogClose } from '@radix-ui/react-dialog'
 
-export interface NewQuestionProps {
+export interface EditQuestionProps {
   //   userId: string,
   buttonTitle: string
   question: any
@@ -36,7 +36,7 @@ export interface NewQuestionProps {
 export default function EditQuestion({
   buttonTitle,
   question
-}: NewQuestionProps) {
+}: EditQuestionProps) {
   const [title, setTitle] = useState(question.title)
   const [topic, setTopic] = useState(question.topic)
   const [question_link, setQuestionLink] = useState(question.question_link)
