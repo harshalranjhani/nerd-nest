@@ -1,5 +1,3 @@
-// api route to add a new note in the notes table with the given values and user_id as the user_id of the user who added the note as the foreign key
-
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
@@ -18,11 +16,11 @@ export async function POST(request: Request) {
     question_id,
   } = body
 
-
   if(!user_id) {
     return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 })
   }
 
+  // Insert the new note
   const { data, error } = await supabase.from('notes').insert([
     {
       user: user_id,
@@ -31,7 +29,27 @@ export async function POST(request: Request) {
       links,
       question_id,
     }
-  ])
-  console.log(error)
+  ]).select()
+
+  if (error) {
+    console.log(error)
+    return new Response(JSON.stringify({ error: 'Failed to add note' }), { status: 500 })
+  }
+
+  // Get the inserted note ID
+  const noteId = data[0]?.id
+
+  if (noteId) {
+    // Update the question with the note ID
+    const { error: updateError } = await supabase.from('questions').update({
+      note_id: noteId
+    }).eq('id', question_id)
+
+    if (updateError) {
+      console.log(updateError)
+      return new Response(JSON.stringify({ error: 'Failed to link note to question' }), { status: 500 })
+    }
+  }
+
   return new Response(JSON.stringify(data), { status: 200 })
 }
