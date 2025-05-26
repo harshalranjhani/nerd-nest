@@ -1,6 +1,6 @@
 // api to get user questions and then categorize with difficulty and count
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -12,16 +12,16 @@ export async function POST(request: Request) {
   const { user_id } = body
 
   if (!user_id) {
-    return new Response(JSON.stringify({ error: 'User ID is required' }), {
+    return new Response(JSON.stringify({ error: "User ID is required" }), {
       status: 400
     })
   }
 
   // get all questions
   const { data, error } = await supabase
-    .from('questions')
+    .from("questions")
     .select()
-    .eq('user', user_id)
+    .eq("user", user_id)
 
   // categorize questions based on difficulty using the data received
   let dataToBeSent: any = {}
@@ -31,9 +31,9 @@ export async function POST(request: Request) {
   let medium = 0
   let hard = 0
   data?.forEach((question: any) => {
-    if (question.difficulty === 'easy') {
+    if (question.difficulty === "easy") {
       easy++
-    } else if (question.difficulty === 'medium') {
+    } else if (question.difficulty === "medium") {
       medium++
     } else {
       hard++
@@ -46,11 +46,11 @@ export async function POST(request: Request) {
   let hardSolved = 0
 
   data?.forEach((question: any) => {
-    if (question.difficulty === 'easy' && question.is_solved) {
+    if (question.difficulty === "easy" && question.is_solved) {
       easySolved++
-    } else if (question.difficulty === 'medium' && question.is_solved) {
+    } else if (question.difficulty === "medium" && question.is_solved) {
       mediumSolved++
-    } else if (question.difficulty === 'hard' && question.is_solved) {
+    } else if (question.difficulty === "hard" && question.is_solved) {
       hardSolved++
     }
   })
@@ -61,22 +61,22 @@ export async function POST(request: Request) {
   // create the data to be sent
   dataToBeSent = [
     {
-      difficulty: 'All',
+      difficulty: "All",
       totalQuestions: total,
       solvedQuestions: totalSolved
     },
     {
-      difficulty: 'Easy',
+      difficulty: "Easy",
       totalQuestions: easy,
       solvedQuestions: easySolved
     },
     {
-      difficulty: 'Medium',
+      difficulty: "Medium",
       totalQuestions: medium,
       solvedQuestions: mediumSolved
     },
     {
-      difficulty: 'Hard',
+      difficulty: "Hard",
       totalQuestions: hard,
       solvedQuestions: hardSolved
     }

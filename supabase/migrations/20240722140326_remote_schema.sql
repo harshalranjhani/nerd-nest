@@ -1,4 +1,4 @@
-create type "public"."difficulty_enum_types" as enum ('easy', 'medium', 'hard');
+create type "public"."difficulty_enum_types" as enum ("easy", "medium", "hard");
 
 create table "public"."notes" (
     "id" uuid not null default gen_random_uuid(),
@@ -88,7 +88,7 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
 AS $function$
 BEGIN
   INSERT INTO public.users (user_id, email, name, created_at, updated_at)
-  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'full_name', NOW(), NOW());
+  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> "full_name", NOW(), NOW());
   RETURN NEW;
 END;
 $function$

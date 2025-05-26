@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger
-} from '@/components/ui/sheet'
-import { IconSidebar } from '@/components/ui/icons'
+} from "@/components/ui/sheet"
+import { IconSidebar } from "@/components/ui/icons"
 
 export interface SidebarProps {
   children?: React.ReactNode

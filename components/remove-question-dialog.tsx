@@ -8,10 +8,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
-import React from 'react'
-import toast from 'react-hot-toast'
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import React from "react"
+import toast from "react-hot-toast"
 
 export function RemoveQuestion({
   user_id,
@@ -22,10 +22,10 @@ export function RemoveQuestion({
 }) {
   const removeQuestion = async () => {
     try {
-      const response = await fetch('/api/user/removeQuestion', {
-        method: 'POST',
+      const response = await fetch("/api/user/removeQuestion", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           user_id,
@@ -33,10 +33,10 @@ export function RemoveQuestion({
         })
       })
       if (!response.ok) {
-        throw new Error('Failed to remove question')
+        throw new Error("Failed to remove question")
       }
       const data = await response.json()
-      toast.success('Question removed!')
+      toast.success("Question removed!")
       window.location.reload()
     } catch (e: any) {
       toast.error(e.message)

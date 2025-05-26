@@ -1,8 +1,8 @@
-import { auth } from '@/auth'
-import Main from '@/components/main'
-import { cookies } from 'next/headers'
+import { auth } from "@/auth"
+import Main from "@/components/main"
+import { cookies } from "next/headers"
 
-export const runtime = 'edge'
+export const runtime = "edge"
 
 export default async function IndexPage() {
   const cookieStore = cookies()

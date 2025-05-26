@@ -1,6 +1,6 @@
-'use client';
-import React, { useState, useMemo } from 'react';
-import Note from './note';
+"use client";
+import React, { useState, useMemo } from "react";
+import Note from "./note";
 
 export interface NotesProps {
   notes: any;
@@ -22,6 +22,6 @@ const Notes = React.memo(({ notes }: NotesProps) => {
   );
 });
 
-Notes.displayName = 'Notes';
+Notes.displayName = "Notes";
 
 export default Notes;

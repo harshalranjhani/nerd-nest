@@ -1,5 +1,5 @@
 "use client";
-import * as React from 'react'
+import * as React from "react"
 import {
   Table,
   TableBody,
@@ -8,11 +8,11 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/ui/table'
-import { IconCheck, IconClose, IconExternalLink } from './ui/icons'
-import { Button } from './ui/button'
-import { Input } from '@/components/ui/input'
-import SendMail from './send-mail'
+} from "@/components/ui/table"
+import { IconCheck, IconClose, IconExternalLink } from "./ui/icons"
+import { Button } from "./ui/button"
+import { Input } from "@/components/ui/input"
+import SendMail from "./send-mail"
 
 export interface StarsTableProps {
   questions: any,
@@ -20,7 +20,7 @@ export interface StarsTableProps {
 }
 
 export function StarsTable({ questions, email }: StarsTableProps) {
-  const [filterValue, setFilterValue] = React.useState('')
+  const [filterValue, setFilterValue] = React.useState("")
   const [filteredQuestions, setFilteredQuestions] = React.useState(questions)
 
   React.useEffect(() => {
@@ -67,11 +67,11 @@ export function StarsTable({ questions, email }: StarsTableProps) {
                   className="capitalize"
                   style={{
                     color:
-                      question?.difficulty === 'easy'
-                        ? 'green'
-                        : question?.difficulty === 'medium'
-                        ? 'yellow'
-                        : 'red'
+                      question?.difficulty === "easy"
+                        ? "green"
+                        : question?.difficulty === "medium"
+                        ? "yellow"
+                        : "red"
                   }}
                 >
                   {question?.difficulty}

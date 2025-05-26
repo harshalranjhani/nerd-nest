@@ -1,7 +1,7 @@
 // api route to get user details
 
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -14,14 +14,14 @@ export async function POST(request: Request) {
 
   // get the user details for the user whose user_id field matches the user_id passed in the request
   const { data } = await supabase
-    .from('users')
-    .select('*')
+    .from("users")
+    .select("*")
     .match({ user_id: user_id })
   
   // fetch questions from the questions table where the user_id field matches the user_id passed in the request
   const { data: questions } = await supabase
-    .from('questions')
-    .select('*')
+    .from("questions")
+    .select("*")
     .match({ user: user_id })
   
   const dataToBeSent = {

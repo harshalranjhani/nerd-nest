@@ -1,5 +1,5 @@
-'use client'
-import React from 'react'
+"use client"
+import React from "react"
 import {
   Card,
   CardContent,
@@ -7,15 +7,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from './ui/card'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { toast } from 'react-hot-toast'
-import { Badge } from './ui/badge'
-import { AES } from 'crypto-js'
-import { useEffect } from 'react'
-import { useToast } from './ui/use-toast'
-import * as CryptoJS from 'crypto-js'
+} from "./ui/card"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { toast } from "react-hot-toast"
+import { Badge } from "./ui/badge"
+import { AES } from "crypto-js"
+import { useEffect } from "react"
+import { useToast } from "./ui/use-toast"
+import * as CryptoJS from "crypto-js"
 
 const saveApiKey = async (apiKey: string, toast: any, setSaved: any) => {
   if (!apiKey) {
@@ -23,31 +23,31 @@ const saveApiKey = async (apiKey: string, toast: any, setSaved: any) => {
   }
 
   // encrypt the api key
-  const encryptedApiKey = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(apiKey), 'SOME-ENCRYPTION-KEY');
+  const encryptedApiKey = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(apiKey), "SOME-ENCRYPTION-KEY");
 
   // store the api key in the browser
-  localStorage.setItem('nerd-nest-gpt-api-key', encryptedApiKey.toString())
+  localStorage.setItem("nerd-nest-gpt-api-key", encryptedApiKey.toString())
   toast({
     duration: 1000,
-    description: 'API key saved!'
+    description: "API key saved!"
   })
   setSaved(true)
 }
 
 const GPTKey = () => {
-  const [apiKey, setApiKey] = React.useState('')
+  const [apiKey, setApiKey] = React.useState("")
   const [saved, setSaved] = React.useState(false)
   const { toast } = useToast()
 
   useEffect(() => {
     // check if the api key is already saved in the browser
-    const encryptedApiKey = localStorage?.getItem('nerd-nest-gpt-api-key')
+    const encryptedApiKey = localStorage?.getItem("nerd-nest-gpt-api-key")
     if (encryptedApiKey) {
       toast({
-        description: 'API key loaded!'
+        description: "API key loaded!"
       })
       // decrypt the api key
-      const decryptedApiKey = CryptoJS.AES.decrypt(encryptedApiKey, 'SOME-ENCRYPTION-KEY')
+      const decryptedApiKey = CryptoJS.AES.decrypt(encryptedApiKey, "SOME-ENCRYPTION-KEY")
       setApiKey(decryptedApiKey.toString(CryptoJS.enc.Utf8))
       setSaved(true)
     }

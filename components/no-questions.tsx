@@ -1,5 +1,5 @@
-'use client'
-import React, { useEffect } from 'react'
+"use client"
+import React, { useEffect } from "react"
 import {
   Card,
   CardContent,
@@ -7,11 +7,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from './ui/card'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { Badge } from './ui/badge'
-import NewQuestion from './new-question-dialog'
+} from "./ui/card"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
+import NewQuestion from "./new-question-dialog"
 
 export interface LeetCodeProps {
   userId: string
@@ -31,7 +31,7 @@ const NoQuestions = ({ userId }: LeetCodeProps) => {
             This will require you to add the question manually, where you can add the question title, description, and the solution.
         </CardContent>
         <CardFooter className="border-t px-6 py-4">
-          <NewQuestion userId={userId} buttonTitle='Add One Now!' />
+          <NewQuestion userId={userId} buttonTitle="Add One Now!" />
         </CardFooter>
       </Card>
     </div>

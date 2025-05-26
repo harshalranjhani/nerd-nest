@@ -1,7 +1,7 @@
 // api route to get user details
 
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
   // delete the question from the questions table where the question_id field matches the question_id passed in the request and the user field matches the user_id passed in the request
     const { data } = await supabase
-        .from('questions')
+        .from("questions")
         .delete()
         .match({ id: question_id, user: user_id })
         .throwOnError()

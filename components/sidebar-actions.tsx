@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import { toast } from "react-hot-toast"
 
-import { type Chat, ServerActionResult } from '@/lib/types'
-import { cn, formatDate } from '@/lib/utils'
+import { type Chat, ServerActionResult } from "@/lib/types"
+import { cn, formatDate } from "@/lib/utils"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,8 +15,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle
-} from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -24,20 +24,20 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog"
 import {
   IconShare,
   IconSpinner,
   IconTrash,
   IconUsers
-} from '@/components/ui/icons'
-import Link from 'next/link'
-import { badgeVariants } from '@/components/ui/badge'
+} from "@/components/ui/icons"
+import Link from "next/link"
+import { badgeVariants } from "@/components/ui/badge"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger
-} from '@/components/ui/tooltip'
+} from "@/components/ui/tooltip"
 
 interface SidebarActionsProps {
   chat: Chat
@@ -58,23 +58,23 @@ export function SidebarActions({
 
   const copyShareLink = React.useCallback(async (chat: Chat) => {
     if (!chat.sharePath) {
-      return toast.error('Could not copy share link to clipboard')
+      return toast.error("Could not copy share link to clipboard")
     }
 
     const url = new URL(window.location.href)
     url.pathname = chat.sharePath
     navigator.clipboard.writeText(url.toString())
     setShareDialogOpen(false)
-    toast.success('Share link copied to clipboard', {
+    toast.success("Share link copied to clipboard", {
       style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
-        fontSize: '14px'
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+        fontSize: "14px"
       },
       iconTheme: {
-        primary: 'white',
-        secondary: 'black'
+        primary: "white",
+        secondary: "black"
       }
     })
   }, [])
@@ -129,8 +129,8 @@ export function SidebarActions({
               <Link
                 href={chat.sharePath}
                 className={cn(
-                  badgeVariants({ variant: 'secondary' }),
-                  'mr-auto'
+                  badgeVariants({ variant: "secondary" }),
+                  "mr-auto"
                 )}
                 target="_blank"
               >
@@ -150,7 +150,7 @@ export function SidebarActions({
 
                   const result = await shareChat(chat)
 
-                  if (result && 'error' in result) {
+                  if (result && "error" in result) {
                     toast.error(result.error)
                     return
                   }
@@ -194,15 +194,15 @@ export function SidebarActions({
                     path: chat.path
                   })
 
-                  if (result && 'error' in result) {
+                  if (result && "error" in result) {
                     toast.error(result.error)
                     return
                   }
 
                   setDeleteDialogOpen(false)
                   router.refresh()
-                  router.push('/')
-                  toast.success('Chat deleted')
+                  router.push("/")
+                  toast.success("Chat deleted")
                 })
               }}
             >

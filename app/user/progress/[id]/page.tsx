@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import { CircleUser, Menu, Package2, Search } from 'lucide-react'
-import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+import Link from "next/link"
+import { CircleUser, Menu, Package2, Search } from "lucide-react"
+import dynamic from "next/dynamic"
+import { Suspense } from "react"
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -11,7 +11,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'
+} from "@/components/ui/card"
 // import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -20,15 +20,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { cookies } from 'next/headers'
-import { auth } from '@/auth'
-import { getLeetCodeDetails } from '@/app/actions'
-import { IconExternalLink } from '@/components/ui/icons'
-import { getUserDetails } from '../../settings/[id]/page'
-import LeetCodeNotFound from '@/components/leetcode-not-found'
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { cookies } from "next/headers"
+import { auth } from "@/auth"
+import { getLeetCodeDetails } from "@/app/actions"
+import { IconExternalLink } from "@/components/ui/icons"
+import { getUserDetails } from "../../settings/[id]/page"
+import LeetCodeNotFound from "@/components/leetcode-not-found"
 import {
   Table,
   TableBody,
@@ -37,8 +37,8 @@ import {
   TableHeader,
   TableRow,
   TableCaption
-} from '@/components/ui/table'
-import { Progress } from '@/components/ui/progress'
+} from "@/components/ui/table"
+import { Progress } from "@/components/ui/progress"
 
 export interface ChatPageProps {
   params: {
@@ -57,7 +57,7 @@ export default async function Dashboard({
   if (!data || !data.matchedUserStats) {
     return (
       <div className="mt-40 flex h-full w-full items-center justify-center">
-        <LeetCodeNotFound userId={session?.user?.id || ''} />
+        <LeetCodeNotFound userId={session?.user?.id || ""} />
       </div>
     )
   }
@@ -69,27 +69,27 @@ export default async function Dashboard({
   const statData = [
     {
       id: 1,
-      difficulty: 'All',
-      totalQuestionsSlug: 'totalQuestions',
-      totalSolvedSlug: 'totalSolved'
+      difficulty: "All",
+      totalQuestionsSlug: "totalQuestions",
+      totalSolvedSlug: "totalSolved"
     },
     {
       id: 2,
-      difficulty: 'Easy',
-      totalQuestionsSlug: 'totalEasy',
-      totalSolvedSlug: 'easySolved'
+      difficulty: "Easy",
+      totalQuestionsSlug: "totalEasy",
+      totalSolvedSlug: "easySolved"
     },
     {
       id: 3,
-      difficulty: 'Medium',
-      totalQuestionsSlug: 'totalMedium',
-      totalSolvedSlug: 'mediumSolved'
+      difficulty: "Medium",
+      totalQuestionsSlug: "totalMedium",
+      totalSolvedSlug: "mediumSolved"
     },
     {
       id: 4,
-      difficulty: 'Hard',
-      totalQuestionsSlug: 'totalHard',
-      totalSolvedSlug: 'hardSolved'
+      difficulty: "Hard",
+      totalQuestionsSlug: "totalHard",
+      totalSolvedSlug: "hardSolved"
     }
   ]
 

@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import { CircleUser, Menu, Package2, Search } from 'lucide-react'
+import Link from "next/link"
+import { CircleUser, Menu, Package2, Search } from "lucide-react"
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,7 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'
+} from "@/components/ui/card"
 // import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -18,16 +18,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { cookies } from 'next/headers'
-import { auth } from '@/auth'
-import { redirect } from 'next/dist/server/api-utils'
-import LeetCode from '@/components/leetcode'
-import { StarsTable } from '@/components/stars-table'
-import NoStarred from '@/components/no-starred.'
-import { getUserDetails } from '../../settings/[id]/page'
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { cookies } from "next/headers"
+import { auth } from "@/auth"
+import { redirect } from "next/dist/server/api-utils"
+import LeetCode from "@/components/leetcode"
+import { StarsTable } from "@/components/stars-table"
+import NoStarred from "@/components/no-starred."
+import { getUserDetails } from "../../settings/[id]/page"
 
 export interface ChatPageProps {
   params: {
@@ -44,9 +44,9 @@ const getStarredQuestions = async (user_id: string): Promise<any> => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/user/getStarred`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             user_id
@@ -99,7 +99,7 @@ export default async function Dashboard({
             </Link>
           </nav>
           {!starred.length ? (
-              <NoStarred userId={session?.user?.id || ''} />
+              <NoStarred userId={session?.user?.id || ""} />
             ) : (
               <div>
                 <StarsTable questions={starred} email={session?.user?.email || ""} />

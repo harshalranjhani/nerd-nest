@@ -20,7 +20,7 @@ on "public"."chats"
 as permissive
 for select
 to public
-using (((payload ->> 'sharePath'::text) IS NOT NULL));
+using (((payload ->> "sharePath"::text) IS NOT NULL));
 
 create policy "Allow full access to own chats"
 on "public"."chats"

@@ -1,5 +1,5 @@
-'use client'
-import { Button } from '@/components/ui/button'
+"use client"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -19,13 +19,13 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue
-} from './ui/select'
-import Difficulty from './select-difficulty'
-import { useEffect, useRef, useState } from 'react'
-import toast from 'react-hot-toast'
-import { Checkbox } from './ui/checkbox'
-import { Question } from './questions-table'
-import { DialogClose } from '@radix-ui/react-dialog'
+} from "./ui/select"
+import Difficulty from "./select-difficulty"
+import { useEffect, useRef, useState } from "react"
+import toast from "react-hot-toast"
+import { Checkbox } from "./ui/checkbox"
+import { Question } from "./questions-table"
+import { DialogClose } from "@radix-ui/react-dialog"
 
 export interface EditQuestionProps {
   //   userId: string,
@@ -44,33 +44,33 @@ export default function EditQuestion({
   const [solution_link, setSolutionLink] = useState(question.solution_link)
   const [is_solved, setIsSolved] = useState(question.is_solved)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     // Handle escape key to close dialog
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setIsOpen(false)
       }
     }
-    window.addEventListener('keydown', handleEscape)
-    return () => window.removeEventListener('keydown', handleEscape)
+    window.addEventListener("keydown", handleEscape)
+    return () => window.removeEventListener("keydown", handleEscape)
   }, [])
 
   const editQuestion = async () => {
     if (!title || !topic || !difficulty) {
-      toast.error('Title, Topic and Difficulty are required')
+      toast.error("Title, Topic and Difficulty are required")
       return
     }
 
     setLoading(true)
     try {
-      const response = await fetch('/api/user/editQuestion', {
-        method: 'POST',
+      const response = await fetch("/api/user/editQuestion", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           user_id: question.user,
@@ -84,7 +84,7 @@ export default function EditQuestion({
         })
       })
       const data = await response.json()
-      toast.success('Question updated successfully!')
+      toast.success("Question updated successfully!")
       // close the dialog
       setLoading(false)
       setIsOpen(false)
@@ -112,7 +112,7 @@ export default function EditQuestion({
           e.stopPropagation()
         }}
         onKeyDown={e => {
-          if (e.key === ' ') {
+          if (e.key === " ") {
             e.stopPropagation()
           }
         }}
@@ -121,9 +121,9 @@ export default function EditQuestion({
           <DialogClose />
           <DialogTitle>Edit Question</DialogTitle>
           <DialogDescription>
-            Edit the question details below.{' '}
+            Edit the question details below.{" "}
             <i className="col-span-4 text-center">
-              Have pdf or image files and nowhere to upload? Check out{' '}
+              Have pdf or image files and nowhere to upload? Check out{" "}
               <a
                 href="https://storage.harshalranjhani.in"
                 target="_blank"
@@ -171,7 +171,7 @@ export default function EditQuestion({
             <Input
               type="url"
               id="question_link"
-              value={question_link || ''}
+              value={question_link || ""}
               onChange={(e: any) => setQuestionLink(e.target.value)}
               placeholder="https://leetcode.com/problems/sort-an-array/"
               className="col-span-3"
@@ -189,7 +189,7 @@ export default function EditQuestion({
             </Label>
             <Input
               type="url"
-              value={solution_link || ''}
+              value={solution_link || ""}
               onChange={e => setSolutionLink(e.target.value)}
               id="solution_link"
               placeholder="https://leetcode.com/problems/sort-an-array/solution/"
@@ -223,7 +223,7 @@ export default function EditQuestion({
               Cancel
             </Button>
             <Button type="submit" onClick={editQuestion}>
-              {loading ? 'Updating...' : 'Save'}
+              {loading ? "Updating..." : "Save"}
             </Button>
           </div>
         </DialogFooter>

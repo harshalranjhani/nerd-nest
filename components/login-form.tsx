@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import * as React from "react"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
-import { Button } from '@/components/ui/button'
-import { IconSpinner } from '@/components/ui/icons'
-import { Input } from './ui/input'
-import { Label } from './ui/label'
-import Link from 'next/link'
-import { toast } from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
+import { Button } from "@/components/ui/button"
+import { IconSpinner } from "@/components/ui/icons"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
+import Link from "next/link"
+import { toast } from "react-hot-toast"
+import { useRouter } from "next/navigation"
 
-interface LoginFormProps extends React.ComponentPropsWithoutRef<'div'> {
-  action: 'sign-in' | 'sign-up'
+interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
+  action: "sign-in" | "sign-up"
 }
 
 export function LoginForm({
   className,
-  action = 'sign-in',
+  action = "sign-in",
   ...props
 }: LoginFormProps) {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -29,8 +29,8 @@ export function LoginForm({
     email: string
     password: string
   }>({
-    email: '',
-    password: ''
+    email: "",
+    password: ""
   })
 
   const signIn = async () => {
@@ -51,7 +51,7 @@ export function LoginForm({
     })
 
     if (!error && !data.session)
-      toast.success('Check your inbox to confirm your email address!')
+      toast.success("Check your inbox to confirm your email address!")
     return error
   }
 
@@ -59,7 +59,7 @@ export function LoginForm({
     e.preventDefault()
     setIsLoading(true)
 
-    const error = action === 'sign-in' ? await signIn() : await signUp()
+    const error = action === "sign-in" ? await signIn() : await signUp()
 
     if (error) {
       setIsLoading(false)
@@ -108,19 +108,19 @@ export function LoginForm({
         <div className="mt-4 flex items-center">
           <Button disabled={isLoading}>
             {isLoading && <IconSpinner className="mr-2 animate-spin" />}
-            {action === 'sign-in' ? 'Sign In' : 'Sign Up'}
+            {action === "sign-in" ? "Sign In" : "Sign Up"}
           </Button>
           <p className="ml-4">
-            {action === 'sign-in' ? (
+            {action === "sign-in" ? (
               <>
-                Don&apos;t have an account?{' '}
+                Don&apos;t have an account?{" "}
                 <Link href="/sign-up" className="font-medium">
                   Sign Up
                 </Link>
               </>
             ) : (
               <>
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <Link href="/sign-in" className="font-medium">
                   Sign In
                 </Link>

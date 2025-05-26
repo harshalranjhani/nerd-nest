@@ -1,5 +1,5 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const { user_id, note_id } = body
 
     const { data } = await supabase
-        .from('notes')
+        .from("notes")
         .delete()
         .match({ id: note_id, user: user_id })
         .throwOnError()

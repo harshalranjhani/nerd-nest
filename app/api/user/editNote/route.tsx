@@ -1,5 +1,5 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -17,14 +17,14 @@ export async function POST(request: Request) {
   } = body
 
   if (!user_id) {
-    return new Response(JSON.stringify({ error: 'User ID is required' }), {
+    return new Response(JSON.stringify({ error: "User ID is required" }), {
       status: 400
     })
   }
 
   // update the note based on the id in the questions table
   const { data, error } = await supabase
-    .from('notes')
+    .from("notes")
     .update({
       user: user_id,
       title,

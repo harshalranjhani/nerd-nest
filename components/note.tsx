@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ExternalLinkIcon } from 'lucide-react';
-import { Badge } from './ui/badge';
-import { useState } from 'react';
-import { NoteViewModal } from './view-note-modal';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ExternalLinkIcon } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { useState } from "react";
+import { NoteViewModal } from "./view-note-modal";
 
 export interface NoteProps {
   note: any;
@@ -16,8 +16,8 @@ export default function Note({ note }: NoteProps) {
   const [viewNoteModalLoading, setViewNoteModalLoading] = useState(false as boolean);
 
   const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(dateString).toLocaleDateString('en-GB', options);
+    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
   };
 
   return (
@@ -35,7 +35,7 @@ export default function Note({ note }: NoteProps) {
           <div className="flex flex-col items-center justify-between md:flex-row">
             <div>
               <CardTitle>{note?.title}</CardTitle>
-              <CardDescription>{note?.questions?.title || 'No question referenced.'}</CardDescription>
+              <CardDescription>{note?.questions?.title || "No question referenced."}</CardDescription>
             </div>
             <div className="mt-2 flex items-center space-x-2 md:mt-0 md:space-x-4">
               {note?.links &&

@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 module.exports = {
   reactStrictMode: true,
   experimental: {
@@ -7,20 +7,20 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**.githubusercontent.com'
+        protocol: "https",
+        hostname: "**.githubusercontent.com"
       },
       {
-        protocol: 'https',
-        hostname: 'localhost',
+        protocol: "https",
+        hostname: "localhost",
       },
       {
-        protocol: 'http',
-        hostname: 'localhost',
+        protocol: "http",
+        hostname: "localhost",
       },
       {
-        protocol: 'https',
-        hostname: 'nerd-nest.harshalranjhani.in',
+        protocol: "https",
+        hostname: "nerd-nest.harshalranjhani.in",
       },
     ]
   }

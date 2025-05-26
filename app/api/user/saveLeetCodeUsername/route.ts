@@ -1,7 +1,7 @@
 // api route to save leetcode username to the user table
 
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
   // save the username for the user whose user_id field matches the user_id passed in the request
   await supabase
-    .from('users')
+    .from("users")
     .update({ leetcode_username: username })
     .match({ user_id: user_id })
 

@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import * as React from "react"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
-import { cn } from '@/lib/utils'
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { IconGitHub, IconSpinner } from '@/components/ui/icons'
+import { cn } from "@/lib/utils"
+import { Button, type ButtonProps } from "@/components/ui/button"
+import { IconGitHub, IconSpinner } from "@/components/ui/icons"
 
 interface LoginButtonProps extends ButtonProps {
   showGithubIcon?: boolean
@@ -13,7 +13,7 @@ interface LoginButtonProps extends ButtonProps {
 }
 
 export function LoginButton({
-  text = 'Login with GitHub',
+  text = "Login with GitHub",
   showGithubIcon = true,
   className,
   ...props
@@ -22,7 +22,7 @@ export function LoginButton({
   // Create a Supabase client configured to use cookies
   const supabase = createClientComponentClient()
 
-  if (process.env.NEXT_PUBLIC_AUTH_GITHUB !== 'true') {
+  if (process.env.NEXT_PUBLIC_AUTH_GITHUB !== "true") {
     return null
   }
 
@@ -32,8 +32,8 @@ export function LoginButton({
       onClick={async () => {
         setIsLoading(true)
         await supabase.auth.signInWithOAuth({
-          provider: 'github',
-          options: { redirectTo: `${process.env.NEXT_PUBLIC_URL}/api/auth/callback`, scopes: 'read:user'},
+          provider: "github",
+          options: { redirectTo: `${process.env.NEXT_PUBLIC_URL}/api/auth/callback`, scopes: "read:user"},
         })
       }}
       disabled={isLoading}

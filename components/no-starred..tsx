@@ -1,5 +1,5 @@
-'use client'
-import React, { useEffect } from 'react'
+"use client"
+import React, { useEffect } from "react"
 import {
   Card,
   CardContent,
@@ -7,11 +7,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from './ui/card'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { Badge } from './ui/badge'
-import NewQuestion from './new-question-dialog'
+} from "./ui/card"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
+import NewQuestion from "./new-question-dialog"
 
 export interface LeetCodeProps {
   userId: string

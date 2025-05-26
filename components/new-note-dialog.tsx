@@ -1,5 +1,5 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,14 +8,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { Checkbox } from './ui/checkbox';
-import { Textarea } from './ui/textarea';
-import { QuestionSelect } from './questions-select';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { Checkbox } from "./ui/checkbox";
+import { Textarea } from "./ui/textarea";
+import { QuestionSelect } from "./questions-select";
 
 export interface NewNoteProps {
   buttonTitle: string;
@@ -23,25 +23,25 @@ export interface NewNoteProps {
 }
 
 export default function AddNote({ buttonTitle, userId }: NewNoteProps) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [questionReferenced, setQuestionReferenced] = useState('');
-  const [links, setLinks] = useState<string[]>(['']);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [questionReferenced, setQuestionReferenced] = useState("");
+  const [links, setLinks] = useState<string[]>([""]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     // when escape key is pressed, close the dialog
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setIsOpen(false);
       }
     };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
-  const addLink = () => setLinks([...links, '']);
+  const addLink = () => setLinks([...links, ""]);
 
   const handleLinkChange = (index: number, value: string) => {
     const newLinks = [...links];
@@ -51,16 +51,16 @@ export default function AddNote({ buttonTitle, userId }: NewNoteProps) {
 
   const addNote = async () => {
     if (!title || !description) {
-      toast.error('Title and Description are required');
+      toast.error("Title and Description are required");
       return;
     }
 
     setLoading(true);
     try {
-      const response = await fetch('/api/user/addNewNote', {
-        method: 'POST',
+      const response = await fetch("/api/user/addNewNote", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title,
@@ -71,12 +71,12 @@ export default function AddNote({ buttonTitle, userId }: NewNoteProps) {
         }),
       });
       const data = await response.json();
-      toast.success('Note added successfully!');
+      toast.success("Note added successfully!");
       window.location.reload();
-      setTitle('');
-      setDescription('');
+      setTitle("");
+      setDescription("");
       setLinks([]);
-      setQuestionReferenced('');
+      setQuestionReferenced("");
       setLoading(false);
       setIsOpen(false);
     } catch (e: any) {
@@ -109,12 +109,12 @@ export default function AddNote({ buttonTitle, userId }: NewNoteProps) {
         <DialogHeader>
           <DialogTitle>New Note</DialogTitle>
           <DialogDescription>
-            Add a new note and link to a question if required!{' '}
+            Add a new note and link to a question if required!{" "}
             <i className="col-span-4 text-center">
-              To add a description head over to{' '}
+              To add a description head over to{" "}
               <a href="https://megahertz.github.io/react-simple-wysiwyg/" target="_blank" className="text-teal-500 underline">
                 this link
-              </a>{' '}
+              </a>{" "}
               and copy and paste the source in the given textarea below!
             </i>
           </DialogDescription>
@@ -177,7 +177,7 @@ export default function AddNote({ buttonTitle, userId }: NewNoteProps) {
               Cancel
             </Button>
             <Button type="submit" onClick={addNote} disabled={loading}>
-              {loading ? 'Adding...' : 'Done'}
+              {loading ? "Adding..." : "Done"}
             </Button>
           </div>
         </DialogFooter>

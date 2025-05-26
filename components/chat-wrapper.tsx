@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import NoGPTKey from '@/components/no-api-key'
-import { Chat } from '@/components/chat'
+import { useEffect, useState } from "react"
+import NoGPTKey from "@/components/no-api-key"
+import { Chat } from "@/components/chat"
 
 interface ChatWrapperProps {
   chat: {
@@ -21,7 +21,7 @@ export default function ChatWrapper({ chat, session }: ChatWrapperProps) {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    const encryptedApiKey = localStorage.getItem('nerd-nest-gpt-api-key')
+    const encryptedApiKey = localStorage.getItem("nerd-nest-gpt-api-key")
     if (encryptedApiKey) {
       setHasApiKey(true)
       setLoaded(true)

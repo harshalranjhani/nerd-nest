@@ -1,5 +1,5 @@
-import type { NextApiRequest } from 'next'
-import type { NextFetchEvent, NextRequest } from 'next/server'
+import type { NextApiRequest } from "next"
+import type { NextFetchEvent, NextRequest } from "next/server"
 
 export const initAnalytics = ({
   request,
@@ -13,10 +13,10 @@ export const initAnalytics = ({
   return {
     track: async (eventName: string, data?: any) => {
       try {
-        if (!endpoint && process.env.NODE_ENV === 'development') {
+        if (!endpoint && process.env.NODE_ENV === "development") {
           console.log(
             `[Vercel Web Analytics] Track "${eventName}"` +
-              (data ? ` with data ${JSON.stringify(data || {})}` : '')
+              (data ? ` with data ${JSON.stringify(data || {})}` : "")
           )
           return
         }
@@ -29,7 +29,7 @@ export const initAnalytics = ({
         const body = {
           o: headers.referer,
           ts: new Date().getTime(),
-          r: '',
+          r: "",
           en: eventName,
           ed: data
         }
@@ -38,13 +38,13 @@ export const initAnalytics = ({
           `https://${process.env.VERCEL_URL}/_vercel/insights/event`,
           {
             headers: {
-              'content-type': 'application/json',
-              'user-agent': headers['user-agent'] as string,
-              'x-forwarded-for': headers['x-forwarded-for'] as string,
-              'x-va-server': '1'
+              "content-type": "application/json",
+              "user-agent": headers["user-agent"] as string,
+              "x-forwarded-for": headers["x-forwarded-for"] as string,
+              "x-va-server": "1"
             },
             body: JSON.stringify(body),
-            method: 'POST'
+            method: "POST"
           }
         )
 

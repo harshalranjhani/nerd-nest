@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import { toast } from "react-hot-toast"
 
-import { ServerActionResult } from '@/lib/types'
-import { Button } from '@/components/ui/button'
+import { ServerActionResult } from "@/lib/types"
+import { Button } from "@/components/ui/button"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,8 +16,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from '@/components/ui/alert-dialog'
-import { IconSpinner } from '@/components/ui/icons'
+} from "@/components/ui/alert-dialog"
+import { IconSpinner } from "@/components/ui/icons"
 
 interface ClearHistoryProps {
   clearChats: () => any
@@ -53,13 +53,13 @@ export function ClearHistory({ clearChats }: ClearHistoryProps) {
               startTransition(async () => {
                 const result = await clearChats()
 
-                if (result && 'error' in result) {
+                if (result && "error" in result) {
                   toast.error(result.error)
                   return
                 }
 
                 setOpen(false)
-                router.push('/')
+                router.push("/")
               })
             }}
           >

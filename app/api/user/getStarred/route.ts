@@ -1,7 +1,7 @@
-// api route to get user's starred questions.
+// api route to get user"s starred questions.
 
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -13,8 +13,8 @@ export async function POST(request: Request) {
   const { user_id } = body
 
   const { data: questions } = await supabase
-    .from('questions')
-    .select('*')
+    .from("questions")
+    .select("*")
     .match({ user: user_id, starred: true })
 
   return new Response(JSON.stringify(questions), { status: 200 })

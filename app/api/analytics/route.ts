@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-export const runtime = 'edge'
+export const runtime = "edge"
 
 export async function POST(request: Request) {
   try {
@@ -9,13 +9,13 @@ export async function POST(request: Request) {
 
     // Here you would typically send this data to your analytics service
     // For example: await sendToAnalyticsService(data)
-    console.log('Analytics data:', data)
+    console.log("Analytics data:", data)
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Analytics error:', error)
+    console.error("Analytics error:", error)
     return NextResponse.json(
-      { error: 'Failed to process analytics' },
+      { error: "Failed to process analytics" },
       { status: 500 }
     )
   }

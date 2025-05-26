@@ -1,7 +1,7 @@
-import { PaperPlaneIcon } from '@radix-ui/react-icons'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { PaperPlaneIcon } from "@radix-ui/react-icons"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -11,16 +11,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import React from 'react'
-import toast from 'react-hot-toast'
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import React from "react"
+import toast from "react-hot-toast"
 
 
 export function ShareList({ questions }: any) {
   const [loading, setLoading] = React.useState(false as boolean)
-  const [email, setEmail] = React.useState('' as string)
+  const [email, setEmail] = React.useState("" as string)
   const sendEmail = async () => {
     setLoading(true)
     const mailObj = {
@@ -31,9 +31,9 @@ export function ShareList({ questions }: any) {
       const response = await fetch(
         `https://api.harshalranjhani.in/mail/questions-pdf`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             mailObj
@@ -41,9 +41,9 @@ export function ShareList({ questions }: any) {
         }
       )
       if (response.status === 200) {
-        toast.success('Email sent successfully')
+        toast.success("Email sent successfully")
       } else {
-        toast.error('Failed to send email')
+        toast.error("Failed to send email")
       }
       setLoading(false)
     } catch (e: any) {

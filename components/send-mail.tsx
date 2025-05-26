@@ -1,5 +1,5 @@
-'use client'
-import React, { useEffect } from 'react'
+"use client"
+import React, { useEffect } from "react"
 import {
   Card,
   CardContent,
@@ -7,13 +7,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from './ui/card'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { Badge } from './ui/badge'
-import NewQuestion from './new-question-dialog'
-import toast from 'react-hot-toast'
-import { ShareList } from './ui/share-starred-list'
+} from "./ui/card"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
+import NewQuestion from "./new-question-dialog"
+import toast from "react-hot-toast"
+import { ShareList } from "./ui/share-starred-list"
 
 export interface LeetCodeProps {
   questions: any
@@ -31,18 +31,18 @@ const SendMail = ({ questions, email }: LeetCodeProps) => {
     }
     try {
       const response = await fetch(`https://api.harshalranjhani.in/mail/questions-pdf`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           mailObj
         })
       })
       if (response.status === 200) {
-        toast.success('Email sent successfully')
+        toast.success("Email sent successfully")
       } else {
-        toast.error('Failed to send email')
+        toast.error("Failed to send email")
       }
       setLoading(false)
     } catch (e: any) {
@@ -72,7 +72,7 @@ const SendMail = ({ questions, email }: LeetCodeProps) => {
             onClick={sendEmail}
             disabled={loading}
           >
-            {loading ? 'Processing...' : 'Email me questions'}
+            {loading ? "Processing..." : "Email me questions"}
           </Button>
           <ShareList questions={questions} />
         </div>

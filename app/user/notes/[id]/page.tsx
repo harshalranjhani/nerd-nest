@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { CircleUser, Menu, Package2, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 // import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -17,19 +17,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { cookies } from 'next/headers';
-import { auth } from '@/auth';
-import { redirect } from 'next/dist/server/api-utils';
-import Note from '@/components/note';
-import Notes from '@/components/notes-page';
-import AddNote from '@/components/new-note-dialog';
-import { getNotes } from '@/app/actions';
-import { ErrorBoundary } from '@/components/error-boundary';
-import { Loading } from '@/components/loading';
-import { Suspense } from 'react';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cookies } from "next/headers";
+import { auth } from "@/auth";
+import { redirect } from "next/dist/server/api-utils";
+import Note from "@/components/note";
+import Notes from "@/components/notes-page";
+import AddNote from "@/components/new-note-dialog";
+import { getNotes } from "@/app/actions";
+import { ErrorBoundary } from "@/components/error-boundary";
+import { Loading } from "@/components/loading";
+import { Suspense } from "react";
 
 export interface ChatPageProps {
   params: {

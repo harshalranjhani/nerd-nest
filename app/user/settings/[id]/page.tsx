@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import { CircleUser, Menu, Package2, Search } from 'lucide-react'
+import Link from "next/link"
+import { CircleUser, Menu, Package2, Search } from "lucide-react"
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,7 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'
+} from "@/components/ui/card"
 // import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -18,14 +18,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { cookies } from 'next/headers'
-import { auth } from '@/auth'
-import { redirect } from 'next/dist/server/api-utils'
-import LeetCode from '@/components/leetcode'
-import GPTKey from '@/components/gpt-key'
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { cookies } from "next/headers"
+import { auth } from "@/auth"
+import { redirect } from "next/dist/server/api-utils"
+import LeetCode from "@/components/leetcode"
+import GPTKey from "@/components/gpt-key"
 
 export interface ChatPageProps {
   params: {
@@ -42,9 +42,9 @@ export const getUserDetails = async (user_id: string): Promise<any> => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/user/getUserDetails`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             user_id

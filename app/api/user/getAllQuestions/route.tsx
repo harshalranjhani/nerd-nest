@@ -1,5 +1,5 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const { user_id } = body
 
   const { data: questions, error } = await supabase
-    .from('questions')
+    .from("questions")
     .select(`
       *,
       notes!note_id(*)

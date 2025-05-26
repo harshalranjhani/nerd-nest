@@ -1,11 +1,11 @@
-import { notFound, redirect } from 'next/navigation'
-import { auth } from '@/auth'
-import { getChat } from '@/app/actions'
-import { cookies } from 'next/headers'
-import ChatWrapper from '@/components/chat-wrapper' 
-import { Metadata } from 'next/types'
-export const runtime = 'edge'
-export const preferredRegion = 'home'
+import { notFound, redirect } from "next/navigation"
+import { auth } from "@/auth"
+import { getChat } from "@/app/actions"
+import { cookies } from "next/headers"
+import ChatWrapper from "@/components/chat-wrapper" 
+import { Metadata } from "next/types"
+export const runtime = "edge"
+export const preferredRegion = "home"
 
 export interface ChatPageProps {
   params: {
@@ -25,7 +25,7 @@ export async function generateMetadata({
 
   const chat = await getChat(params.id)
   return {
-    title: chat?.title.toString().slice(0, 50) ?? 'Chat'
+    title: chat?.title.toString().slice(0, 50) ?? "Chat"
   }
 }
 

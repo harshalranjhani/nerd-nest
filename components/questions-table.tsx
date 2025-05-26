@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 import {
   CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon
-} from '@radix-ui/react-icons'
+} from "@radix-ui/react-icons"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -17,10 +17,10 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable
-} from '@tanstack/react-table'
+} from "@tanstack/react-table"
 
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,8 +29,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -38,19 +38,19 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/ui/table'
-import { IconCheck, IconClose, IconEdit, IconExternalLink } from './ui/icons'
-import EditQuestion from './edit-question-dialog'
-import toast from 'react-hot-toast'
-import { DialogTrigger } from '@radix-ui/react-dialog'
+} from "@/components/ui/table"
+import { IconCheck, IconClose, IconEdit, IconExternalLink } from "./ui/icons"
+import EditQuestion from "./edit-question-dialog"
+import toast from "react-hot-toast"
+import { DialogTrigger } from "@radix-ui/react-dialog"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle
-} from '@radix-ui/react-dialog'
-import { DialogHeader } from '@/components/ui/dialog'
-import { RemoveQuestion } from './remove-question-dialog'
+} from "@radix-ui/react-dialog"
+import { DialogHeader } from "@/components/ui/dialog"
+import { RemoveQuestion } from "./remove-question-dialog"
 
 export type Question = {
   id: string
@@ -71,10 +71,10 @@ const starQuestion = async (
   is_starred: boolean
 ) => {
   try {
-    const response = await fetch('/api/user/starQuestion', {
-      method: 'POST',
+    const response = await fetch("/api/user/starQuestion", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         user_id,
@@ -83,11 +83,11 @@ const starQuestion = async (
       })
     })
     if (!response.ok) {
-      throw new Error('Failed to star question')
+      throw new Error("Failed to star question")
     }
     const data = await response.json()
     window.location.reload()
-    toast.success(is_starred ? 'Question starred!' : 'Question unstarred!')
+    toast.success(is_starred ? "Question starred!" : "Question unstarred!")
   } catch (e: any) {
     toast.error(e.message)
   }
@@ -95,53 +95,53 @@ const starQuestion = async (
 
 export const columns: ColumnDef<Question>[] = [
   {
-    accessorKey: 'title',
-    header: 'Title',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('title')}</div>
+    accessorKey: "title",
+    header: "Title",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("title")}</div>
   },
   {
-    accessorKey: 'topic',
+    accessorKey: "topic",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Topic
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue('topic')}</div>
+    cell: ({ row }) => <div className="lowercase">{row.getValue("topic")}</div>
   },
   {
-    accessorKey: 'difficulty',
-    header: 'Difficulty',
+    accessorKey: "difficulty",
+    header: "Difficulty",
     cell: ({ row }) => {
-      const difficultyVal = row.getValue('difficulty')
+      const difficultyVal = row.getValue("difficulty")
       return (
         <div
           className="capitalize"
           style={{
             color:
-              difficultyVal === 'easy'
-                ? 'green'
-                : difficultyVal === 'medium'
-                ? 'yellow'
-                : 'red'
+              difficultyVal === "easy"
+                ? "green"
+                : difficultyVal === "medium"
+                ? "yellow"
+                : "red"
           }}
         >
-          {row.getValue('difficulty')}
+          {row.getValue("difficulty")}
         </div>
       )
     }
   },
   {
-    accessorKey: 'question_link',
-    header: 'Question',
+    accessorKey: "question_link",
+    header: "Question",
     cell: ({ row }) => {
-      return row.getValue('question_link') ? (
-        <a href={row.getValue('question_link')} target="_blank">
+      return row.getValue("question_link") ? (
+        <a href={row.getValue("question_link")} target="_blank">
           <IconExternalLink />
         </a>
       ) : (
@@ -150,11 +150,11 @@ export const columns: ColumnDef<Question>[] = [
     }
   },
   {
-    accessorKey: 'solution_link',
-    header: 'Solution',
+    accessorKey: "solution_link",
+    header: "Solution",
     cell: ({ row }) => {
-      return row.getValue('solution_link') ? (
-        <a href={row.getValue('solution_link')} target="_blank">
+      return row.getValue("solution_link") ? (
+        <a href={row.getValue("solution_link")} target="_blank">
           <IconExternalLink />
         </a>
       ) : (
@@ -163,14 +163,14 @@ export const columns: ColumnDef<Question>[] = [
     }
   },
   {
-    accessorKey: 'is_solved',
-    header: 'Status',
+    accessorKey: "is_solved",
+    header: "Status",
     cell: ({ row }) => {
-      return row.getValue('is_solved') ? <IconCheck /> : <IconClose />
+      return row.getValue("is_solved") ? <IconCheck /> : <IconClose />
     }
   },
   {
-    id: 'actions',
+    id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
       const question = row.original
@@ -195,7 +195,7 @@ export const columns: ColumnDef<Question>[] = [
                   )
                 }}
               >
-                {question.starred ? 'Unstar' : 'Star'}
+                {question.starred ? "Unstar" : "Star"}
               </Button>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -266,7 +266,7 @@ export default function QuestionsTable({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter by title or topic..."
-          value={table.getState().globalFilter ?? ''}
+          value={table.getState().globalFilter ?? ""}
           onChange={event => {
             table.setGlobalFilter(event.target.value)
           }}
@@ -322,7 +322,7 @@ export default function QuestionsTable({
               table.getRowModel().rows.map(row => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>

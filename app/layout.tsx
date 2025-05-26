@@ -1,29 +1,29 @@
-import { Metadata } from 'next'
+import { Metadata } from "next"
 
-import { Toaster } from '../components/ui/toaster'
+import { Toaster } from "../components/ui/toaster"
 
-import '@/app/globals.css'
-import { fontMono } from '@/lib/fonts'
-import { cn } from '@/lib/utils'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { Providers } from '@/components/providers'
-import { Header } from '@/components/header'
-import { Toaster as HotToaster } from 'react-hot-toast'
+import "@/app/globals.css"
+import { fontMono } from "@/lib/fonts"
+import { cn } from "@/lib/utils"
+import { TailwindIndicator } from "@/components/tailwind-indicator"
+import { Providers } from "@/components/providers"
+import { Header } from "@/components/header"
+import { Toaster as HotToaster } from "react-hot-toast"
 
 export const metadata: Metadata = {
   title: {
-    default: 'Nerd Nest',
+    default: "Nerd Nest",
     template: `%s - Nerd Nest`
   },
-  description: 'Ask Questions, Track Progress and Evolve!',
+  description: "Ask Questions, Track Progress and Evolve!",
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' }
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" }
   ],
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png'
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png"
   }
 }
 
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head />
       <body
         className={cn(
-          'font-sans antialiased',
+          "font-sans antialiased",
           // fontSans.variable,
           fontMono.variable
         )}

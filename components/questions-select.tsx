@@ -1,5 +1,5 @@
-'use client'
-import * as React from 'react'
+"use client"
+import * as React from "react"
 import {
   Command,
   CommandDialog,
@@ -8,14 +8,14 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandItem
-} from '@/components/ui/command'
-import { Button } from '@/components/ui/button'
-import toast from 'react-hot-toast'
+} from "@/components/ui/command"
+import { Button } from "@/components/ui/button"
+import toast from "react-hot-toast"
 
 export function QuestionSelect({ userId, setQuestionReferenced }: { userId: string, setQuestionReferenced: (id: string) => void }) {
   const [questions, setQuestions] = React.useState([] as any)
   const [open, setOpen] = React.useState(false)
-  const [searchTerm, setSearchTerm] = React.useState('')
+  const [searchTerm, setSearchTerm] = React.useState("")
   const [selected, setSelected] = React.useState<any>(null)
 
   React.useEffect(() => {
@@ -24,8 +24,8 @@ export function QuestionSelect({ userId, setQuestionReferenced }: { userId: stri
 
   const fetchQuestions = async () => {
     try {
-      const response = await fetch('/api/user/getAllQuestions', {
-        method: 'POST',
+      const response = await fetch("/api/user/getAllQuestions", {
+        method: "POST",
         body: JSON.stringify({
           user_id: userId
         })
@@ -33,7 +33,7 @@ export function QuestionSelect({ userId, setQuestionReferenced }: { userId: stri
       const data = await response.json()
       setQuestions(data)
     } catch (e) {
-      toast.error('Failed to fetch questions')
+      toast.error("Failed to fetch questions")
     }
   }
 
@@ -51,7 +51,7 @@ export function QuestionSelect({ userId, setQuestionReferenced }: { userId: stri
         onClick={() => setOpen(true)}
         type="button"
       >
-        {selected ? selected.title : 'Select a question'}
+        {selected ? selected.title : "Select a question"}
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput

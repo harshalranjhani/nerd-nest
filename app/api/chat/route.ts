@@ -1,14 +1,14 @@
-import 'server-only'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
-import { Configuration, OpenAIApi } from 'openai-edge'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import { Database } from '@/lib/db_types'
+import "server-only"
+import { OpenAIStream, StreamingTextResponse } from "ai"
+import { Configuration, OpenAIApi } from "openai-edge"
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import { Database } from "@/lib/db_types"
 
-import { auth } from '@/auth'
-import { nanoid } from '@/lib/utils'
+import { auth } from "@/auth"
+import { nanoid } from "@/lib/utils"
 
-export const runtime = 'edge'
+export const runtime = "edge"
 
 export async function POST(req: Request) {
   const cookieStore = cookies()
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   const json = await req.json()
   const { messages, previewToken, apiKey } = json
   if (!apiKey) {
-    return new Response('Unauthorized', {
+    return new Response("Unauthorized", {
       status: 401
     })
   }
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
   const userId = (await auth({ cookieStore }))?.user.id
 
   if (!userId) {
-    return new Response('Unauthorized', {
+    return new Response("Unauthorized", {
       status: 401
     })
   }
@@ -40,15 +40,15 @@ export async function POST(req: Request) {
   }
 
   const systemMessage = {
-    role: 'system',
+    role: "system",
     content:
-      'Assume the role of an expert career advisor and educator specializing in computer science. Your primary expertise is in helping students with Data Structures and Algorithms (DSA). You provide comprehensive guidance on solving complex DSA problems, offer tips for optimizing code, and help with understanding core concepts in computer science. Additionally, you assist students with career advice tailored to tech industry roles, including preparing for technical interviews, resume tips, and strategies for securing internships and jobs in tech companies. Your responses should be educational, encouraging, and focused on delivering practical advice and detailed explanations.'
+      "Assume the role of an expert career advisor and educator specializing in computer science. Your primary expertise is in helping students with Data Structures and Algorithms (DSA). You provide comprehensive guidance on solving complex DSA problems, offer tips for optimizing code, and help with understanding core concepts in computer science. Additionally, you assist students with career advice tailored to tech industry roles, including preparing for technical interviews, resume tips, and strategies for securing internships and jobs in tech companies. Your responses should be educational, encouraging, and focused on delivering practical advice and detailed explanations."
   }
 
   const adjustedMessages = [systemMessage, ...messages]
 
   const res = await openai.createChatCompletion({
-    model: 'gpt-4o-mini',
+    model: "gpt-4o-mini",
     messages: adjustedMessages,
     temperature: 0.7,
     stream: true
@@ -70,12 +70,12 @@ export async function POST(req: Request) {
           ...messages,
           {
             content: completion,
-            role: 'assistant'
+            role: "assistant"
           }
         ]
       }
       // Insert chat into database.
-      await supabase.from('chats').upsert({ id, payload }).throwOnError()
+      await supabase.from("chats").upsert({ id, payload }).throwOnError()
     }
   })
 

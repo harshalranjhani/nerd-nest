@@ -1,5 +1,5 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -17,11 +17,11 @@ export async function POST(request: Request) {
   } = body
 
   if(!user_id) {
-    return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 })
+    return new Response(JSON.stringify({ error: "User ID is required" }), { status: 400 })
   }
 
   // Insert the new note
-  const { data, error } = await supabase.from('notes').insert([
+  const { data, error } = await supabase.from("notes").insert([
     {
       user: user_id,
       title,
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
   if (error) {
     console.log(error)
-    return new Response(JSON.stringify({ error: 'Failed to add note' }), { status: 500 })
+    return new Response(JSON.stringify({ error: "Failed to add note" }), { status: 500 })
   }
 
   // Get the inserted note ID
@@ -41,13 +41,13 @@ export async function POST(request: Request) {
 
   if (noteId) {
     // Update the question with the note ID
-    const { error: updateError } = await supabase.from('questions').update({
+    const { error: updateError } = await supabase.from("questions").update({
       note_id: noteId
-    }).eq('id', question_id)
+    }).eq("id", question_id)
 
     if (updateError) {
       console.log(updateError)
-      return new Response(JSON.stringify({ error: 'Failed to link note to question' }), { status: 500 })
+      return new Response(JSON.stringify({ error: "Failed to link note to question" }), { status: 500 })
     }
   }
 

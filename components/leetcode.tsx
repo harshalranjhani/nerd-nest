@@ -1,5 +1,5 @@
-'use client'
-import React from 'react'
+"use client"
+import React from "react"
 import {
   Card,
   CardContent,
@@ -7,11 +7,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from './ui/card'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { toast } from 'react-hot-toast'
-import { Badge } from './ui/badge'
+} from "./ui/card"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { toast } from "react-hot-toast"
+import { Badge } from "./ui/badge"
 
 export interface LeetCodeProps {
   userId: string
@@ -23,10 +23,10 @@ const saveUsername = async (username: string, user_id: string) => {
     return
   }
   if (username) {
-    await fetch('/api/user/saveLeetCodeUsername', {
-      method: 'POST',
+    await fetch("/api/user/saveLeetCodeUsername", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         user_id,
@@ -34,7 +34,7 @@ const saveUsername = async (username: string, user_id: string) => {
       })
     })
       .then(() => {
-        toast.success('Username saved')
+        toast.success("Username saved")
       })
       .catch(error => {
         toast.error(error.message)

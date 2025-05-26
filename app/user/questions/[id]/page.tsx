@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import { CircleUser, Menu, Package2, Search } from 'lucide-react'
+import Link from "next/link"
+import { CircleUser, Menu, Package2, Search } from "lucide-react"
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,7 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'
+} from "@/components/ui/card"
 // import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -18,18 +18,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { cookies } from 'next/headers'
-import { auth } from '@/auth'
-import { redirect } from 'next/dist/server/api-utils'
-import LeetCode from '@/components/leetcode'
-import NoQuestions from '@/components/no-questions'
-import { getUserDetails } from '../../settings/[id]/page'
-import QuestionsTable from '@/components/questions-table'
-import NewQuestion from '@/components/new-question-dialog'
-import { Progress } from '@/components/ui/progress'
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { cookies } from "next/headers"
+import { auth } from "@/auth"
+import { redirect } from "next/dist/server/api-utils"
+import LeetCode from "@/components/leetcode"
+import NoQuestions from "@/components/no-questions"
+import { getUserDetails } from "../../settings/[id]/page"
+import QuestionsTable from "@/components/questions-table"
+import NewQuestion from "@/components/new-question-dialog"
+import { Progress } from "@/components/ui/progress"
 export interface ChatPageProps {
   params: {
     id: string
@@ -45,9 +45,9 @@ async function getStats(user_id: string) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/user/getCustomStats`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             user_id
@@ -129,7 +129,7 @@ export default async function Dashboard({
                 ))}
               </div>
               {!receivedData.questionsData.length ? (
-                <NoQuestions userId={session?.user?.id || ''} />
+                <NoQuestions userId={session?.user?.id || ""} />
               ) : (
                 <div>
                   <NewQuestion

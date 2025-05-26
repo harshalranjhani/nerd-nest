@@ -1,5 +1,5 @@
-'use client'
-import { Button } from '@/components/ui/button'
+"use client"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -19,11 +19,11 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue
-} from './ui/select'
-import Difficulty from './select-difficulty'
-import { useEffect, useRef, useState } from 'react'
-import toast from 'react-hot-toast'
-import { Checkbox } from './ui/checkbox'
+} from "./ui/select"
+import Difficulty from "./select-difficulty"
+import { useEffect, useRef, useState } from "react"
+import toast from "react-hot-toast"
+import { Checkbox } from "./ui/checkbox"
 
 export interface NewQuestionProps {
   userId: string
@@ -31,40 +31,40 @@ export interface NewQuestionProps {
 }
 
 export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
-  const [title, setTitle] = useState('')
-  const [topic, setTopic] = useState('')
-  const [question_link, setQuestionLink] = useState('')
-  const [difficulty, setDifficulty] = useState('easy')
-  const [solution_link, setSolutionLink] = useState('')
+  const [title, setTitle] = useState("")
+  const [topic, setTopic] = useState("")
+  const [question_link, setQuestionLink] = useState("")
+  const [difficulty, setDifficulty] = useState("easy")
+  const [solution_link, setSolutionLink] = useState("")
   const [is_solved, setIsSolved] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     // Handle escape key to close dialog
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setIsOpen(false)
       }
     }
-    window.addEventListener('keydown', handleEscape)
-    return () => window.removeEventListener('keydown', handleEscape)
+    window.addEventListener("keydown", handleEscape)
+    return () => window.removeEventListener("keydown", handleEscape)
   }, [])
 
   const addQuestion = async () => {
     if (!title || !topic || !difficulty) {
-      toast.error('Title, Topic and Difficulty are required')
+      toast.error("Title, Topic and Difficulty are required")
       return
     }
 
     setLoading(true)
     try {
-      const response = await fetch('/api/user/addNewQuestion', {
-        method: 'POST',
+      const response = await fetch("/api/user/addNewQuestion", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           user_id: userId,
@@ -77,13 +77,13 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
         })
       })
       const data = await response.json()
-      toast.success('Question added successfully!')
+      toast.success("Question added successfully!")
       window.location.reload()
-      setTitle('')
-      setTopic('')
-      setQuestionLink('')
-      setDifficulty('easy')
-      setSolutionLink('')
+      setTitle("")
+      setTopic("")
+      setQuestionLink("")
+      setDifficulty("easy")
+      setSolutionLink("")
       setIsSolved(false)
       setLoading(false)
     } catch (e: any) {
@@ -104,7 +104,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
             <DialogDescription>
               Add a new question to further track your progress.
               <i className="col-span-4 text-center">
-                Have pdf or image files and nowhere to upload? Check out{' '}
+                Have pdf or image files and nowhere to upload? Check out{" "}
                 <a
                   href="https://storage.harshalranjhani.in"
                   target="_blank"
@@ -197,7 +197,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
                 Cancel
               </Button>
               <Button type="submit" onClick={addQuestion} disabled={loading}>
-                {loading ? 'Adding...' : 'Done'}
+                {loading ? "Adding..." : "Done"}
               </Button>
             </div>
           </DialogFooter>

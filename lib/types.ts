@@ -1,4 +1,4 @@
-import { type Message } from 'ai'
+import { type Message } from "ai"
 
 // TODO refactor and remove unneccessary duplicate data.
 export interface Chat extends Record<string, any> {

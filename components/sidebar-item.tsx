@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-import { type Chat } from '@/lib/types'
-import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
-import { IconMessage, IconUsers } from '@/components/ui/icons'
+import { type Chat } from "@/lib/types"
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
+import { IconMessage, IconUsers } from "@/components/ui/icons"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger
-} from '@/components/ui/tooltip'
+} from "@/components/ui/tooltip"
 
 interface SidebarItemProps {
   chat: Chat
@@ -44,9 +44,9 @@ export function SidebarItem({ chat, children }: SidebarItemProps) {
       <Link
         href={chat.path}
         className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'group w-full pl-8 pr-16',
-          isActive && 'bg-accent'
+          buttonVariants({ variant: "ghost" }),
+          "group w-full pl-8 pr-16",
+          isActive && "bg-accent"
         )}
       >
         <div
