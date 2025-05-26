@@ -26,7 +26,7 @@ import { auth } from "@/auth"
 import { redirect } from "next/dist/server/api-utils"
 import LeetCode from "@/components/leetcode"
 import { StarsTable } from "@/components/stars-table"
-import NoStarred from "@/components/no-starred."
+import NoStarred from "@/components/no-starred"
 import { getUserDetails } from "../../settings/[id]/page"
 
 export interface ChatPageProps {
@@ -84,7 +84,6 @@ export default async function Dashboard({
         <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
           <nav
             className="grid gap-4 text-sm text-muted-foreground"
-            x-chunk="dashboard-04-chunk-0"
           >
             <Link
               href={`/user/settings/${session?.user?.id}`}

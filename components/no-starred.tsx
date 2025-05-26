@@ -20,7 +20,7 @@ export interface LeetCodeProps {
 const NoStarred = ({ userId }: LeetCodeProps) => {
   return (
     <div>
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
           <CardTitle>No Questions starred so far.</CardTitle>
           <CardDescription>

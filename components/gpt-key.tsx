@@ -55,9 +55,9 @@ const GPTKey = () => {
 
   return (
     <div>
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
-          <CardTitle>ChatGPT API Key</CardTitle>
+          <CardTitle>Add GPT API Key</CardTitle>
           <CardDescription>
             Used for the AI assistant in the chat. This is not stored on the
             server. It is encrypted and stored in your browser.

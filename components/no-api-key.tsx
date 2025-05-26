@@ -20,7 +20,7 @@ export interface LeetCodeProps {
 const NoGPTKey = ({ userId }: LeetCodeProps) => {
   return (
     <div className="m-10">
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
           <CardTitle>No GPT API Key was found linked to the account.</CardTitle>
           <CardDescription>

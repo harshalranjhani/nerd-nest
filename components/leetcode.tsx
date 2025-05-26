@@ -46,9 +46,9 @@ const LeetCode = ({ userId, leetcode_username }: LeetCodeProps) => {
   const [username, setUsername] = React.useState(leetcode_username)
   return (
     <div>
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
-          <CardTitle>Leetcode username</CardTitle>
+          <CardTitle>LeetCode</CardTitle>
           <CardDescription>
             Used for fetching your submissions and problems.
           </CardDescription>

@@ -54,9 +54,9 @@ const SendMail = ({ questions, email }: LeetCodeProps) => {
 
   return (
     <div>
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
-          <CardTitle>Questions you have starred in the past.</CardTitle>
+          <CardTitle>Send an Email</CardTitle>
           <CardDescription>
             You can also email yourself the questions you have starred.
           </CardDescription>

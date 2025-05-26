@@ -19,9 +19,9 @@ export interface LeetCodeProps {
 const LeetCodeNotFound = ({ userId }: LeetCodeProps) => {
   return (
     <div>
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
-          <CardTitle>Leetcode details not found.</CardTitle>
+          <CardTitle>No LeetCode username found</CardTitle>
           <CardDescription>
             Kindly check your leetcode username.
           </CardDescription>

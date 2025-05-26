@@ -52,7 +52,7 @@ export default async function Dashboard({ params }: ChatPageProps): Promise<any>
           <h1 className="text-3xl font-semibold">Settings</h1>
         </div>
         <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-          <nav className="grid gap-4 text-sm text-muted-foreground" x-chunk="dashboard-04-chunk-0">
+          <nav className="grid gap-4 text-sm text-muted-foreground">
             <Link href={`/user/settings/${session?.user?.id}`}>General</Link>
             <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
             <Link href={`/user/questions/${session?.user?.id}`}>Custom</Link>

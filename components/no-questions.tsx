@@ -20,9 +20,9 @@ export interface LeetCodeProps {
 const NoQuestions = ({ userId }: LeetCodeProps) => {
   return (
     <div>
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
-          <CardTitle>No Questions added so far.</CardTitle>
+          <CardTitle>No custom questions added so far.</CardTitle>
           <CardDescription>
             Add your own custom questions to further track your progress.
           </CardDescription>
