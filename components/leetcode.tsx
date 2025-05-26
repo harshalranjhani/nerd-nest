@@ -62,7 +62,9 @@ const LeetCode = ({ userId, leetcode_username }: LeetCodeProps) => {
               }}
               value={username}
             />
-            {leetcode_username && <Badge className='mt-2'>Username saved, change to edit</Badge>}
+            {leetcode_username && (
+              <Badge className="mt-2">Username saved, change to edit</Badge>
+            )}
           </form>
         </CardContent>
         <CardFooter className="border-t px-6 py-4">

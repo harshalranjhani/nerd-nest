@@ -27,6 +27,9 @@ import Note from '@/components/note';
 import Notes from '@/components/notes-page';
 import AddNote from '@/components/new-note-dialog';
 import { getNotes } from '@/app/actions';
+import { ErrorBoundary } from '@/components/error-boundary';
+import { Loading } from '@/components/loading';
+import { Suspense } from 'react';
 
 export interface ChatPageProps {
   params: {
@@ -41,8 +44,6 @@ export default async function Dashboard({ params }: ChatPageProps): Promise<any>
   if (params.id !== session?.user?.id) {
     return null;
   }
-
-  const notes = await getNotes(params.id);
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -65,12 +66,19 @@ export default async function Dashboard({ params }: ChatPageProps): Promise<any>
               <div className="text-white text-3xl font-bold">Your notes</div>
               <AddNote buttonTitle="Add new" userId={session?.user?.id} />
             </div>
-            <div>
-              <Notes notes={notes} />
-            </div>
+            <ErrorBoundary>
+              <Suspense fallback={<Loading />}>
+                <NotesWrapper userId={params.id} />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         </div>
       </main>
     </div>
   );
+}
+
+async function NotesWrapper({ userId }: { userId: string }) {
+  const notes = await getNotes(userId);
+  return <Notes notes={notes} />;
 }

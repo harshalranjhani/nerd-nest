@@ -1,20 +1,27 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Note from './note';
 
 export interface NotesProps {
   notes: any;
 }
 
-const Notes = ({ notes }: NotesProps) => {
+const Notes = React.memo(({ notes }: NotesProps) => {
   const [notesArray, setNotesArray] = useState(notes);
+  
+  const memoizedNotes = useMemo(() => {
+    return notesArray?.map((note: any) => (
+      <Note key={note.id} note={note} />
+    ));
+  }, [notesArray]);
+
   return (
     <div>
-      {notesArray?.map((note: any) => {
-        return <Note key={note.id} note={note} />;
-      })}
+      {memoizedNotes}
     </div>
   );
-};
+});
+
+Notes.displayName = 'Notes';
 
 export default Notes;

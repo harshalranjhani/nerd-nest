@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { CircleUser, Menu, Package2, Search } from 'lucide-react'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -23,21 +25,20 @@ import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cookies } from 'next/headers'
 import { auth } from '@/auth'
-import { Progress } from '@/components/ui/progress'
 import { getLeetCodeDetails } from '@/app/actions'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table'
 import { IconExternalLink } from '@/components/ui/icons'
 import { getUserDetails } from '../../settings/[id]/page'
 import LeetCodeNotFound from '@/components/leetcode-not-found'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCaption
+} from '@/components/ui/table'
+import { Progress } from '@/components/ui/progress'
 
 export interface ChatPageProps {
   params: {
@@ -53,8 +54,12 @@ export default async function Dashboard({
   const dataReceived = await getUserDetails(params.id)
   const userDetails = dataReceived?.userData[0]
   const data = await getLeetCodeDetails(userDetails?.leetcode_username)
-  if(!data || !data.matchedUserStats) {
-    return <div className='w-full h-full flex justify-center items-center mt-40'><LeetCodeNotFound userId={session?.user?.id || ""} /></div>
+  if (!data || !data.matchedUserStats) {
+    return (
+      <div className="mt-40 flex h-full w-full items-center justify-center">
+        <LeetCodeNotFound userId={session?.user?.id || ''} />
+      </div>
+    )
   }
 
   if (params.id !== session?.user?.id) {
@@ -103,15 +108,9 @@ export default async function Dashboard({
             <Link href="#" className="font-semibold text-primary">
               Progress
             </Link>
-            <Link href={`/user/questions/${session?.user?.id}`}>
-              Custom
-            </Link>
-            <Link href={`/user/stars/${session?.user?.id}`}>
-              Stars
-            </Link>
-            <Link href={`/user/notes/${session?.user?.id}`}>
-              Notes
-            </Link>
+            <Link href={`/user/questions/${session?.user?.id}`}>Custom</Link>
+            <Link href={`/user/stars/${session?.user?.id}`}>Stars</Link>
+            <Link href={`/user/notes/${session?.user?.id}`}>Notes</Link>
           </nav>
           <div className="grid gap-6">
             <span className="text-3xl font-semibold text-primary">
@@ -133,51 +132,56 @@ export default async function Dashboard({
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Progress
-                        value={
-                          (data[stat.totalSolvedSlug] /
-                          data[stat.totalQuestionsSlug])*100
-                        }
-                      />
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <Progress
+                          value={
+                            (data[stat.totalSolvedSlug] /
+                              data[stat.totalQuestionsSlug]) *
+                            100
+                          }
+                        />
+                      </Suspense>
                     </CardFooter>
                   </Card>
                 </>
               ))}
             </div>
             <h1>Recent Submissions</h1>
-            <Table>
-              <TableCaption>A list of your recent submissions.</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Visit</TableHead>
-                  <TableHead>Question</TableHead>
-                  <TableHead>Submission Time</TableHead>
-                  <TableHead className="text-right">Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data?.recentSubmissions?.map((submission: any) => (
-                  <TableRow key={submission.timestamp}>
-                    <TableCell>
-                      <a
-                        href={`https://leetcode.com/problems/${submission.titleSlug}`}
-                      >
-                        <IconExternalLink />
-                      </a>
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {submission.title}
-                    </TableCell>
-                    <TableCell>
-                      {new Date(submission.timestamp * 1000).toLocaleString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {submission.statusDisplay}
-                    </TableCell>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Table>
+                <TableCaption>A list of your recent submissions.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Visit</TableHead>
+                    <TableHead>Question</TableHead>
+                    <TableHead>Submission Time</TableHead>
+                    <TableHead className="text-right">Status</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {data?.recentSubmissions?.map((submission: any) => (
+                    <TableRow key={submission.timestamp}>
+                      <TableCell>
+                        <a
+                          href={`https://leetcode.com/problems/${submission.titleSlug}`}
+                        >
+                          <IconExternalLink />
+                        </a>
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {submission.title}
+                      </TableCell>
+                      <TableCell>
+                        {new Date(submission.timestamp * 1000).toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {submission.statusDisplay}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Suspense>
           </div>
         </div>
       </main>

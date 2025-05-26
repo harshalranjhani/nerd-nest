@@ -21,12 +21,12 @@ import {
   SelectValue
 } from './ui/select'
 import Difficulty from './select-difficulty'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Checkbox } from './ui/checkbox'
 
 export interface NewQuestionProps {
-  userId: string,
+  userId: string
   buttonTitle: string
 }
 
@@ -40,6 +40,18 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    // Handle escape key to close dialog
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [])
 
   const addQuestion = async () => {
     if (!title || !topic || !difficulty) {
@@ -82,16 +94,26 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={isOpen}>
         <DialogTrigger asChild>
-          <Button>{buttonTitle}</Button>
+          <Button onClick={() => setIsOpen(true)}>{buttonTitle}</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>New Question</DialogTitle>
             <DialogDescription>
               Add a new question to further track your progress.
-              <i className='col-span-4 text-center'>Have pdf or image files and nowhere to upload? Check out <a href="https://storage.harshalranjhani.in" target="_blank" className="text-teal-500 underline">storage.harshalranjhani.in</a>!</i>
+              <i className="col-span-4 text-center">
+                Have pdf or image files and nowhere to upload? Check out{' '}
+                <a
+                  href="https://storage.harshalranjhani.in"
+                  target="_blank"
+                  className="text-teal-500 underline"
+                >
+                  storage.harshalranjhani.in
+                </a>
+                !
+              </i>
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -170,9 +192,14 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={addQuestion} disabled={loading}>
-              {loading ? "Adding..." : "Done"}
-            </Button>
+            <div className="w-[100%] flex justify-between">
+              <Button variant="ghost" onClick={() => setIsOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" onClick={addQuestion} disabled={loading}>
+                {loading ? 'Adding...' : 'Done'}
+              </Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>

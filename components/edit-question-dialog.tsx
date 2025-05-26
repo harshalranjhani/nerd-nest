@@ -21,7 +21,7 @@ import {
   SelectValue
 } from './ui/select'
 import Difficulty from './select-difficulty'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Checkbox } from './ui/checkbox'
 import { Question } from './questions-table'
@@ -47,6 +47,17 @@ export default function EditQuestion({
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    // Handle escape key to close dialog
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [])
 
   const editQuestion = async () => {
     if (!title || !topic || !difficulty) {
@@ -110,7 +121,18 @@ export default function EditQuestion({
           <DialogClose />
           <DialogTitle>Edit Question</DialogTitle>
           <DialogDescription>
-            Edit the question details below. <i className='col-span-4 text-center'>Have pdf or image files and nowhere to upload? Check out <a href="https://storage.harshalranjhani.in" target="_blank" className="text-teal-500 underline">storage.harshalranjhani.in</a>!</i>
+            Edit the question details below.{' '}
+            <i className="col-span-4 text-center">
+              Have pdf or image files and nowhere to upload? Check out{' '}
+              <a
+                href="https://storage.harshalranjhani.in"
+                target="_blank"
+                className="text-teal-500 underline"
+              >
+                storage.harshalranjhani.in
+              </a>
+              !
+            </i>
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -191,7 +213,7 @@ export default function EditQuestion({
           </div>
         </div>
         <DialogFooter>
-          <div className="flex justify-between w-[100%]">
+          <div className="flex w-[100%] justify-between">
             <Button
               variant="ghost"
               onClick={() => {

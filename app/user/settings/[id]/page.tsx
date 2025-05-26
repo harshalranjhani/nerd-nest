@@ -48,7 +48,8 @@ export const getUserDetails = async (user_id: string): Promise<any> => {
           },
           body: JSON.stringify({
             user_id
-          })
+          }),
+          next: { revalidate: 60 } // Cache for 60 seconds
         }
       )
       const data = await response.json()
@@ -85,17 +86,17 @@ export default async function Dashboard({
             className="grid gap-4 text-sm text-muted-foreground"
             x-chunk="dashboard-04-chunk-0"
           >
-            <Link href="#" className="font-semibold text-primary">
+            <Link href="#" className="font-semibold text-primary" prefetch>
               General
             </Link>
-            <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
-            <Link href={`/user/questions/${session?.user?.id}`}>
+            <Link href={`/user/progress/${session?.user?.id}`} prefetch>Progress</Link>
+            <Link href={`/user/questions/${session?.user?.id}`} prefetch>
               Custom
             </Link>
-            <Link href={`/user/stars/${session?.user?.id}`}>
+            <Link href={`/user/stars/${session?.user?.id}`} prefetch>
               Stars
             </Link>
-            <Link href={`/user/notes/${session?.user?.id}`}>
+            <Link href={`/user/notes/${session?.user?.id}`} prefetch>
               Notes
             </Link>
           </nav>
