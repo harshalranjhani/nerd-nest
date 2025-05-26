@@ -30,6 +30,7 @@ import { getNotes } from "@/app/actions";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { Loading } from "@/components/loading";
 import { Suspense } from "react";
+import { getUserDetails } from "../../settings/[id]/page";
 
 export interface ChatPageProps {
   params: {
@@ -43,6 +44,26 @@ export default async function Dashboard({ params }: ChatPageProps): Promise<any>
 
   if (params.id !== session?.user?.id) {
     return null;
+  }
+
+  const dataReceived = await getUserDetails(params.id);
+  
+  if (!dataReceived || dataReceived.error) {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center">
+        <h1 className="text-2xl font-semibold">
+          {dataReceived?.error || "Something went wrong"}
+        </h1>
+      </div>
+    );
+  }
+
+  if (!dataReceived.userData || dataReceived.userData.length === 0) {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center">
+        <h1 className="text-2xl font-semibold">User not found</h1>
+      </div>
+    );
   }
 
   return (

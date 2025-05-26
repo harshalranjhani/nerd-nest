@@ -75,7 +75,26 @@ export default async function Dashboard({
   }
   const receivedData = await getUserDetails(params.id)
   const statData = await getStats(params.id)
-  const userDetails = receivedData?.userData[0]
+  
+  if (!receivedData || receivedData.error) {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center">
+        <h1 className="text-2xl font-semibold">
+          {receivedData?.error || "Something went wrong"}
+        </h1>
+      </div>
+    )
+  }
+
+  if (!receivedData.userData || receivedData.userData.length === 0) {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center">
+        <h1 className="text-2xl font-semibold">User not found</h1>
+      </div>
+    )
+  }
+
+  const userDetails = receivedData.userData[0]
   return (
     <>
       <div className="flex min-h-screen w-full flex-col">

@@ -73,8 +73,27 @@ export default async function Dashboard({
     return null
   }
   const dataReceived = await getUserDetails(params.id)
-  const starred = await getStarredQuestions(params.id)
+  
+  if (!dataReceived || dataReceived.error) {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center">
+        <h1 className="text-2xl font-semibold">
+          {dataReceived?.error || "Something went wrong"}
+        </h1>
+      </div>
+    )
+  }
+
+  if (!dataReceived.userData || dataReceived.userData.length === 0) {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center">
+        <h1 className="text-2xl font-semibold">User not found</h1>
+      </div>
+    )
+  }
+
   const userDetails = dataReceived.userData[0]
+  const starred = await getStarredQuestions(params.id)
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
@@ -97,7 +116,7 @@ export default async function Dashboard({
               Notes
             </Link>
           </nav>
-          {!starred.length ? (
+          {!starred?.length ? (
               <NoStarred userId={session?.user?.id || ""} />
             ) : (
               <div>
