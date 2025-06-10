@@ -19,8 +19,13 @@ export interface UserMenuProps {
 }
 
 function getUserInitials(name: string) {
+  if (!name) return "U"
+  
   const [firstName, lastName] = name.split(" ")
-  return lastName ? `${firstName[0]}${lastName[0]}` : firstName.slice(0, 2)
+  
+  if (!firstName) return "U"
+  
+  return lastName && lastName.length > 0 ? `${firstName[0]}${lastName[0]}` : firstName.slice(0, 2)
 }
 
 export function UserMenu({ user }: UserMenuProps) {
@@ -53,7 +58,7 @@ export function UserMenu({ user }: UserMenuProps) {
               />
             ) : (
               <div className="flex h-7 w-7 shrink-0 select-none items-center justify-center rounded-full bg-muted/50 text-xs font-medium uppercase text-muted-foreground">
-                {getUserInitials(user?.user_metadata.name ?? user?.email)}
+                {getUserInitials(user?.user_metadata.name ?? user?.email ?? "")}
               </div>
             )}
             <span className="ml-2">{user?.user_metadata.name ?? "👋🏼"}</span>

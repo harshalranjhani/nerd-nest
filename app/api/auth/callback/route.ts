@@ -18,13 +18,16 @@ export async function GET(request: Request) {
     if (
       supabase_user &&
       supabase_user.identities &&
-      supabase_user.identities.length > 0
+      supabase_user.identities.length > 0 &&
+      supabase_user.identities[0]
     ) {
+      const firstIdentity = supabase_user.identities[0]
+      
       // Check if user already exists in the database
       const { data: userExists, error: userExistsError } = await supabase
         .from("users")
         .select("user_id")
-        .eq("user_id", supabase_user.identities[0].user_id)
+        .eq("user_id", firstIdentity.user_id)
         .single()
 
       if (userExistsError && !userExists) {
@@ -32,11 +35,11 @@ export async function GET(request: Request) {
         const { data } = await supabase
           .from("users")
           .insert({
-            user_id: supabase_user.identities[0].user_id,
+            user_id: firstIdentity.user_id,
             email: supabase_user.email,
             role: supabase_user.role,
-            created_at: supabase_user.identities[0].created_at,
-            updated_at: supabase_user.identities[0].updated_at,
+            created_at: firstIdentity.created_at,
+            updated_at: firstIdentity.updated_at,
             name: supabase_user.user_metadata?.user_name
           })
           .throwOnError()
