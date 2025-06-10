@@ -10,6 +10,7 @@ import {
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 import React from "react"
 import toast from "react-hot-toast"
 
@@ -20,6 +21,7 @@ export function RemoveQuestion({
   user_id: string
   question_id: string
 }) {
+  const router = useRouter();
   const removeQuestion = async () => {
     try {
       const response = await fetch("/api/user/removeQuestion", {
@@ -37,7 +39,7 @@ export function RemoveQuestion({
       }
       const data = await response.json()
       toast.success("Question removed!")
-      window.location.reload()
+      router.refresh();
     } catch (e: any) {
       toast.error(e.message)
     }

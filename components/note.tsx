@@ -30,10 +30,15 @@ export default function Note({ note }: NoteProps) {
     }
   }, [note?.created_at]);
 
-  const truncateText = (text: string, maxLength: number = 100) => {
-    if (!text) return "No content";
-    // Remove HTML tags and extra whitespace
-    const cleanText = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  const truncateText = (text: string, maxLength: number = 120) => {
+    if (!text) return "No content available";
+    // Remove HTML tags and extra whitespace more thoroughly
+    const cleanText = text
+      .replace(/<[^>]*>/g, '') // Remove HTML tags
+      .replace(/&[^;]+;/g, ' ') // Remove HTML entities
+      .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+      .trim();
+    
     if (cleanText.length <= maxLength) return cleanText;
     return cleanText.substring(0, maxLength) + "...";
   };
@@ -44,7 +49,7 @@ export default function Note({ note }: NoteProps) {
       <Card className="bg-card/50 backdrop-blur-sm h-fit">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg font-semibold leading-tight truncate">
-            {note?.title}
+            {note?.title || "Untitled Note"}
           </CardTitle>
           <CardDescription className="text-sm text-muted-foreground mt-1 truncate">
             {note?.questions?.title ? note.questions.title : "Personal note"}
@@ -68,6 +73,11 @@ export default function Note({ note }: NoteProps) {
     );
   }
 
+  // Don't render if note data is missing
+  if (!note) {
+    return null;
+  }
+
   return (
     <>
       <NoteViewModal
@@ -81,16 +91,20 @@ export default function Note({ note }: NoteProps) {
       <Card className="group hover:shadow-lg transition-all duration-300 hover:border-primary/20 cursor-pointer bg-card/50 backdrop-blur-sm h-fit">
         <CardHeader className="pb-3">
           <div className="flex flex-col space-y-3">
-            <div className="flex items-start justify-between gap-2">
+            <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg font-semibold leading-tight group-hover:text-primary transition-colors duration-200 break-words" 
+                <CardTitle 
+                  className="text-lg font-semibold leading-tight group-hover:text-primary transition-colors duration-200 break-words hyphens-auto" 
                   style={{
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                  }}>
-                  {note?.title}
+                    overflow: 'hidden',
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word'
+                  }}
+                >
+                  {note?.title || "Untitled Note"}
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground mt-1 truncate">
                   {note?.questions?.title ? (
@@ -113,12 +127,16 @@ export default function Note({ note }: NoteProps) {
             
             {/* Preview of note content */}
             <div className="text-sm text-muted-foreground/80 bg-muted/30 rounded-md p-3 border border-muted/50">
-              <div className="break-words overflow-hidden" 
+              <div 
+                className="break-words overflow-hidden hyphens-auto" 
                 style={{
                   display: '-webkit-box',
                   WebkitLineClamp: 3,
-                  WebkitBoxOrient: 'vertical'
-                }}>
+                  WebkitBoxOrient: 'vertical',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
+                }}
+              >
                 {truncateText(note?.description || "")}
               </div>
             </div>

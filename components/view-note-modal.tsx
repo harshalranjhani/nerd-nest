@@ -36,35 +36,51 @@ export const NoteViewModal: React.FC<NoteModalProps> = ({
     }
   }, [data?.created_at]);
 
+  // Helper function to safely render HTML content
+  const renderContent = (htmlContent: string) => {
+    if (!htmlContent) return "No content available";
+    
+    // Clean up the HTML content
+    const cleanedContent = htmlContent
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remove scripts
+      .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, ''); // Remove styles
+    
+    return cleanedContent;
+  };
+
   if (!isMounted) {
+    return null;
+  }
+
+  if (!data) {
     return null;
   }
 
   return (
     <Modal
-      title={data.title}
+      title={data.title || "Untitled Note"}
       description={data?.questions?.title ? `Linked to: ${data.questions.title}` : "Personal note"}
       isOpen={isOpen}
       onClose={onClose}
     >
-      <div className="space-y-6">
+      <div className="space-y-6 max-w-full">
         {/* Header with metadata */}
-        <div className="flex items-center justify-between pb-4 border-b border-border/50">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-border/50">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <CalendarIcon className="w-4 h-4" />
-              <span>{formattedDate || "Loading..."}</span>
+              <CalendarIcon className="w-4 h-4 flex-shrink-0" />
+              <span className="break-all">{formattedDate || "Loading..."}</span>
             </div>
             {data?.links && data.links.length > 0 && (
               <div className="flex items-center gap-1">
-                <LinkIcon className="w-4 h-4 text-muted-foreground" />
+                <LinkIcon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                 <span className="text-sm text-muted-foreground">{data.links.length} links</span>
               </div>
             )}
           </div>
           
           {/* Status badges */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {data?.questions ? (
               <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-blue-500/20">
                 Question linked
@@ -78,18 +94,23 @@ export const NoteViewModal: React.FC<NoteModalProps> = ({
         </div>
 
         {/* Note content */}
-        <div className="max-h-[50vh] overflow-y-auto rounded-md border border-border/50 bg-muted/20 p-4">
-          <div 
-            className="prose prose-sm dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: data.description }} 
-          />
+        <div className="space-y-3">
+          <h4 className="font-medium text-sm text-foreground">Note Content</h4>
+          <div className="max-h-[50vh] overflow-y-auto rounded-md border border-border/50 bg-muted/20 p-4">
+            <div 
+              className="prose prose-sm dark:prose-invert max-w-none break-words"
+              dangerouslySetInnerHTML={{ 
+                __html: renderContent(data.description || "") 
+              }} 
+            />
+          </div>
         </div>
 
         {/* Question info section */}
         {data?.questions && (
           <div className="space-y-3 p-4 bg-muted/30 rounded-md border border-border/50">
             <h4 className="font-medium text-sm text-foreground">Linked Question</h4>
-            <p className="text-sm text-muted-foreground">{data.questions.title}</p>
+            <p className="text-sm text-muted-foreground break-words">{data.questions.title}</p>
             <div className="flex gap-2 flex-wrap">
               {data.questions.question_link && (
                 <a 
@@ -123,7 +144,7 @@ export const NoteViewModal: React.FC<NoteModalProps> = ({
         {data?.links && data.links.length > 0 && (
           <div className="space-y-3 p-4 bg-muted/30 rounded-md border border-border/50">
             <h4 className="font-medium text-sm text-foreground">Additional Resources</h4>
-            <div className="grid gap-2">
+            <div className="grid gap-2 max-h-48 overflow-y-auto">
               {data.links.map((link: string, index: number) => (
                 link && (
                   <a 
@@ -131,10 +152,10 @@ export const NoteViewModal: React.FC<NoteModalProps> = ({
                     href={link} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 p-2 rounded-md bg-background/50 hover:bg-background transition-colors duration-200 text-sm group"
+                    className="flex items-center gap-2 p-2 rounded-md bg-background/50 hover:bg-background transition-colors duration-200 text-sm group min-w-0"
                   >
-                    <ExternalLinkIcon className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-200" />
-                    <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200 truncate">
+                    <ExternalLinkIcon className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-200 flex-shrink-0" />
+                    <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200 break-all">
                       {link}
                     </span>
                   </a>

@@ -24,6 +24,7 @@ import Difficulty from "./select-difficulty"
 import { useEffect, useRef, useState } from "react"
 import toast from "react-hot-toast"
 import { Checkbox } from "./ui/checkbox"
+import { useRouter } from "next/navigation"
 
 export interface NewQuestionProps {
   userId: string
@@ -41,6 +42,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter();
 
   useEffect(() => {
     // Handle escape key to close dialog
@@ -78,7 +80,7 @@ export default function NewQuestion({ userId, buttonTitle }: NewQuestionProps) {
       })
       const data = await response.json()
       toast.success("Question added successfully!")
-      window.location.reload()
+      router.refresh();
       setTitle("")
       setTopic("")
       setQuestionLink("")

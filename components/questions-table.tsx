@@ -51,6 +51,7 @@ import {
 } from "@radix-ui/react-dialog"
 import { DialogHeader } from "@/components/ui/dialog"
 import { RemoveQuestion } from "./remove-question-dialog"
+import { useRouter } from "next/navigation"
 
 export type Question = {
   id: string
@@ -65,33 +66,7 @@ export type Question = {
   is_solved: boolean
 }
 
-const starQuestion = async (
-  user_id: string,
-  question_id: string,
-  is_starred: boolean
-) => {
-  try {
-    const response = await fetch("/api/user/starQuestion", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        user_id,
-        question_id,
-        is_starred
-      })
-    })
-    if (!response.ok) {
-      throw new Error("Failed to star question")
-    }
-    const data = await response.json()
-    window.location.reload()
-    toast.success(is_starred ? "Question starred!" : "Question unstarred!")
-  } catch (e: any) {
-    toast.error(e.message)
-  }
-}
+
 
 export const columns: ColumnDef<Question>[] = [
   {
@@ -235,6 +210,35 @@ export default function QuestionsTable({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const router = useRouter();
+
+  const starQuestion = async (
+    user_id: string,
+    question_id: string,
+    is_starred: boolean
+  ) => {
+    try {
+      const response = await fetch("/api/user/starQuestion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id,
+          question_id,
+          is_starred
+        })
+      })
+      if (!response.ok) {
+        throw new Error("Failed to star question")
+      }
+      const data = await response.json()
+      router.refresh();
+      toast.success(is_starred ? "Question starred!" : "Question unstarred!")
+    } catch (e: any) {
+      toast.error(e.message)
+    }
+  }
 
   const table = useReactTable({
     data,
