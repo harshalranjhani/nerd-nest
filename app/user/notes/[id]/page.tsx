@@ -67,28 +67,31 @@ export default async function Dashboard({ params }: ChatPageProps): Promise<any>
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col">
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-        <div className="mx-auto grid w-full max-w-6xl gap-2">
-          <h1 className="text-3xl font-semibold">Settings</h1>
+    <div className="flex min-h-screen w-full flex-col bg-background">
+      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-6 bg-muted/40 p-4 md:gap-8 md:p-6">
+        <div className="mx-auto grid w-full max-w-7xl gap-2">
+          <h1 className="text-3xl font-semibold tracking-tight">Settings</h1>
         </div>
-        <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-          <nav className="grid gap-4 text-sm text-muted-foreground">
-            <Link href={`/user/settings/${session?.user?.id}`}>General</Link>
-            <Link href={`/user/progress/${session?.user?.id}`}>Progress</Link>
-            <Link href={`/user/questions/${session?.user?.id}`}>Custom</Link>
-            <Link href={`/user/stars/${session?.user?.id}`}>Stars</Link>
+        <div className="mx-auto grid w-full max-w-7xl items-start gap-6 md:grid-cols-[200px_1fr] lg:grid-cols-[280px_1fr]">
+          <nav className="grid gap-4 text-sm text-muted-foreground sticky top-4">
+            <Link href={`/user/settings/${session?.user?.id}`} className="transition-colors hover:text-foreground">General</Link>
+            <Link href={`/user/progress/${session?.user?.id}`} className="transition-colors hover:text-foreground">Progress</Link>
+            <Link href={`/user/questions/${session?.user?.id}`} className="transition-colors hover:text-foreground">Custom</Link>
+            <Link href={`/user/stars/${session?.user?.id}`} className="transition-colors hover:text-foreground">Stars</Link>
             <Link href="#" className="font-semibold text-primary">
               Notes
             </Link>
           </nav>
-          <div className="grid gap-6">
-            <div className="flex w-[100%] justify-around">
-              <div className="text-white text-3xl font-bold">Your notes</div>
-              <AddNote buttonTitle="Add new" userId={session?.user?.id} />
+          <div className="grid gap-8">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <h2 className="text-2xl font-bold tracking-tight">Your Notes</h2>
+                <p className="text-muted-foreground">Manage and organize your coding notes</p>
+              </div>
+              <AddNote buttonTitle="Add Note" userId={session?.user?.id} />
             </div>
             <ErrorBoundary>
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<NotesLoadingSkeleton />}>
                 <NotesWrapper userId={params.id} />
               </Suspense>
             </ErrorBoundary>
@@ -102,4 +105,23 @@ export default async function Dashboard({ params }: ChatPageProps): Promise<any>
 async function NotesWrapper({ userId }: { userId: string }) {
   const notes = await getNotes(userId);
   return <Notes notes={notes} />;
+}
+
+function NotesLoadingSkeleton() {
+  return (
+    <div className="grid gap-4">
+      {[...Array(3)].map((_, i) => (
+        <Card key={i} className="animate-pulse">
+          <CardHeader>
+            <div className="h-4 bg-muted rounded w-3/4"></div>
+            <div className="h-3 bg-muted rounded w-1/2 mt-2"></div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-3 bg-muted rounded w-full"></div>
+            <div className="h-3 bg-muted rounded w-2/3 mt-2"></div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
 }

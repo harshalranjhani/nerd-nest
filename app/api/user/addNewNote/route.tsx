@@ -20,14 +20,22 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ error: "User ID is required" }), { status: 400 })
   }
 
+  if(!title?.trim()) {
+    return new Response(JSON.stringify({ error: "Title is required" }), { status: 400 })
+  }
+
+  if(!description?.trim()) {
+    return new Response(JSON.stringify({ error: "Description is required" }), { status: 400 })
+  }
+
   // Insert the new note
   const { data, error } = await supabase.from("notes").insert([
     {
       user: user_id,
-      title,
-      description,
-      links,
-      question_id,
+      title: title.trim(),
+      description: description.trim(),
+      links: links || [],
+      question_id: question_id || null,
     }
   ]).select()
 
@@ -39,15 +47,15 @@ export async function POST(request: Request) {
   // Get the inserted note ID
   const noteId = data[0]?.id
 
-  if (noteId) {
-    // Update the question with the note ID
+  // Only update the question if question_id is provided and noteId exists
+  if (noteId && question_id) {
     const { error: updateError } = await supabase.from("questions").update({
       note_id: noteId
     }).eq("id", question_id)
 
     if (updateError) {
-      console.log(updateError)
-      return new Response(JSON.stringify({ error: "Failed to link note to question" }), { status: 500 })
+      console.log("Warning: Failed to link note to question:", updateError)
+      // Don't fail the request if question linking fails, just log it
     }
   }
 
